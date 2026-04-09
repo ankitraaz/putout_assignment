@@ -1,0 +1,242 @@
+[
+  {
+    "id": "1",
+    "name": "Zara",
+    "category": "Fashion",
+    "rating": 4.5,
+    "discount": 20,
+    "address": "Phoenix Mall, Mumbai",
+    "imageUrl": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "2",
+    "name": "H&M",
+    "category": "Fashion",
+    "rating": 4.3,
+    "discount": 30,
+    "address": "Linking Road, Bandra",
+    "imageUrl": "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "3",
+    "name": "Starbucks",
+    "category": "Cafe",
+    "rating": 4.7,
+    "discount": 0,
+    "address": "Juhu Beach Road",
+    "imageUrl": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "4",
+    "name": "Nike Store",
+    "category": "Sports",
+    "rating": 4.6,
+    "discount": 15,
+    "address": "Inorbit Mall, Malad",
+    "imageUrl": "https://images.unsplash.com/photo-1556906781-9a412961c28c?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "5",
+    "name": "Domino's Pizza",
+    "category": "Food",
+    "rating": 4.2,
+    "discount": 50,
+    "address": "Andheri West",
+    "imageUrl": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "6",
+    "name": "Apple Store",
+    "category": "Electronics",
+    "rating": 4.9,
+    "discount": 5,
+    "address": "BKC, Mumbai",
+    "imageUrl": "https://images.unsplash.com/photo-1491933382434-500287f9b54b?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "7",
+    "name": "Sephora",
+    "category": "Beauty",
+    "rating": 4.4,
+    "discount": 25,
+    "address": "Palladium Mall, Lower Parel",
+    "imageUrl": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400",
+    "isOpen": false
+  },
+  {
+    "id": "8",
+    "name": "Reliance Fresh",
+    "category": "Grocery",
+    "rating": 4.1,
+    "discount": 10,
+    "address": "Powai, Mumbai",
+    "imageUrl": "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "9",
+    "name": "McDonald's",
+    "category": "Food",
+    "rating": 4.0,
+    "discount": 40,
+    "address": "Dadar Station Complex",
+    "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "10",
+    "name": "Croma",
+    "category": "Electronics",
+    "rating": 4.3,
+    "discount": 12,
+    "address": "R City Mall, Ghatkopar",
+    "imageUrl": "https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "11",
+    "name": "Westside",
+    "category": "Fashion",
+    "rating": 4.8,
+    "discount": 30,
+    "address": "High Street Phoenix, Lower Parel",
+    "imageUrl": "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "12",
+    "name": "Reliance Digital",
+    "category": "Electronics",
+    "rating": 4.6,
+    "discount": 40,
+    "address": "Viviana Mall, Thane",
+    "imageUrl": "https://images.unsplash.com/photo-1491933382434-500287f9b54b?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "13",
+    "name": "Home Centre",
+    "category": "Home",
+    "rating": 4.2,
+    "discount": 35,
+    "address": "Oberoi Mall, Goregaon",
+    "imageUrl": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "14",
+    "name": "Nykaa Luxe",
+    "category": "Beauty",
+    "rating": 4.9,
+    "discount": 15,
+    "address": "Palladium Mall, Lower Parel",
+    "imageUrl": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "15",
+    "name": "Shoppers Stop",
+    "category": "Fashion",
+    "rating": 4.3,
+    "discount": 50,
+    "address": "Infiniti Mall, Andheri",
+    "imageUrl": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "16",
+    "name": "Pantaloons",
+    "category": "Fashion",
+    "rating": 4.1,
+    "discount": 200,
+    "address": "Phoenix Marketcity, Kurla",
+    "imageUrl": "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "17",
+    "name": "Lenskart",
+    "category": "Fashion",
+    "rating": 4.4,
+    "discount": 25,
+    "address": "Linking Road, Bandra",
+    "imageUrl": "https://images.unsplash.com/photo-1556906781-9a412961c28c?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "18",
+    "name": "Cafe Coffee Day",
+    "category": "Cafe",
+    "rating": 4.0,
+    "discount": 0,
+    "address": "Colaba Causeway",
+    "imageUrl": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "19",
+    "name": "Puma",
+    "category": "Sports",
+    "rating": 4.5,
+    "discount": 20,
+    "address": "Seawoods Grand Central, Navi Mumbai",
+    "imageUrl": "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "20",
+    "name": "IKEA",
+    "category": "Home",
+    "rating": 4.7,
+    "discount": 10,
+    "address": "IKEA Navi Mumbai",
+    "imageUrl": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "21",
+    "name": "Burger King",
+    "category": "Food",
+    "rating": 4.1,
+    "discount": 45,
+    "address": "Bandra West",
+    "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "22",
+    "name": "Marks & Spencer",
+    "category": "Fashion",
+    "rating": 4.6,
+    "discount": 30,
+    "address": "High Street Phoenix, Lower Parel",
+    "imageUrl": "https://images.unsplash.com/photo-1445205170230-053b83016050?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "23",
+    "name": "Samsung Store",
+    "category": "Electronics",
+    "rating": 4.4,
+    "discount": 18,
+    "address": "Infiniti Mall, Malad",
+    "imageUrl": "https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=400",
+    "isOpen": true
+  },
+  {
+    "id": "24",
+    "name": "Bath & Body Works",
+    "category": "Beauty",
+    "rating": 4.8,
+    "discount": 20,
+    "address": "Phoenix Marketcity, Kurla",
+    "imageUrl": "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=400",
+    "isOpen": false
+  }
+]

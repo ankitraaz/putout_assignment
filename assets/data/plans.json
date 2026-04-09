@@ -1,0 +1,44 @@
+[
+  {
+    "id": "p1",
+    "name": "KUTOOT PLUS",
+    "price": 299,
+    "duration": "Monthly",
+    "gradientColors": ["#8B1A4A", "#BE1E48"],
+    "features": [
+      "Free delivery on all orders",
+      "Early access to Flash Sales",
+      "2x Reward Points multiplier",
+      "Exclusive Plus Member discounts"
+    ],
+    "isPopular": false
+  },
+  {
+    "id": "p2",
+    "name": "KUTOOT GOLD",
+    "price": 999,
+    "duration": "Semi-Annual",
+    "gradientColors": ["#E8803A", "#FFA726"],
+    "features": [
+      "Everything in Plus",
+      "Priority Customer Support",
+      "VIP access to Luxury Fashion",
+      "Complimentary Spa Vouchers"
+    ],
+    "isPopular": true
+  },
+  {
+    "id": "p3",
+    "name": "KUTOOT PLATINUM",
+    "price": 1499,
+    "duration": "Annually",
+    "gradientColors": ["#1A1A2E", "#16213E"],
+    "features": [
+      "Everything in Gold",
+      "Personalized Stylist advice",
+      "Surprise Birthday Gifts",
+      "Invites to Exclusive Events"
+    ],
+    "isPopular": false
+  }
+]

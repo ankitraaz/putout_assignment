@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "name": "Fashion",
+    "icon": "checkroom",
+    "color": "#FF6B6B"
+  },
+  {
+    "id": "2",
+    "name": "Food",
+    "icon": "restaurant",
+    "color": "#FFA726"
+  },
+  {
+    "id": "3",
+    "name": "Grocery",
+    "icon": "shopping_cart",
+    "color": "#66BB6A"
+  },
+  {
+    "id": "4",
+    "name": "Electronics",
+    "icon": "devices",
+    "color": "#42A5F5"
+  },
+  {
+    "id": "5",
+    "name": "Beauty",
+    "icon": "spa",
+    "color": "#EC407A"
+  },
+  {
+    "id": "6",
+    "name": "Sports",
+    "icon": "sports_basketball",
+    "color": "#7E57C2"
+  },
+  {
+    "id": "7",
+    "name": "Cafe",
+    "icon": "local_cafe",
+    "color": "#8D6E63"
+  },
+  {
+    "id": "8",
+    "name": "Health",
+    "icon": "favorite",
+    "color": "#26A69A"
+  }
+]

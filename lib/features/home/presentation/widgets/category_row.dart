@@ -1,0 +1,150 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kuttot/core/constants/app_colors.dart';
+import 'package:kuttot/core/providers/app_providers.dart';
+
+class CategoryRow extends ConsumerWidget {
+  const CategoryRow({super.key});
+
+  IconData _getIconData(String iconName) {
+    switch (iconName) {
+      case 'checkroom':
+        return Icons.checkroom;
+      case 'restaurant':
+        return Icons.restaurant;
+      case 'shopping_cart':
+        return Icons.shopping_cart;
+      case 'devices':
+        return Icons.devices;
+      case 'spa':
+        return Icons.spa;
+      case 'sports_basketball':
+        return Icons.sports_basketball;
+      case 'local_cafe':
+        return Icons.local_cafe;
+      case 'favorite':
+        return Icons.favorite;
+      default:
+        return Icons.category;
+    }
+  }
+
+  Color _getColorFromHex(String hexColor) {
+    hexColor = hexColor.replaceAll("#", "");
+    if (hexColor.length == 6) {
+      hexColor = "FF$hexColor";
+    }
+    return Color(int.parse("0x$hexColor"));
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final categoriesAsync = ref.watch(categoriesProvider);
+
+    return categoriesAsync.when(
+      data: (categories) {
+        return SizedBox(
+          height: 100,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            itemCount: categories.length + 1, // +1 for "ALL"
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                // "ALL" Category
+                return Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 60,
+                        width: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: AppColors.primary.withValues(alpha: 0.1),
+                        ),
+                        child: const Center(
+                          child: Icon(
+                            Icons.grid_view_rounded,
+                            color: Color(0xFFBE1E48), // Matching the red theme
+                            size: 28,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        'ALL',
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w800,
+                          color: Color(0xFFBE1E48),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+
+              final category = categories[index - 1];
+              final isFashion = category.name.toLowerCase() == 'fashion';
+              // Match Fashion strictly to the dark red to match mockup if needed
+              final colorHex = isFashion ? "#BE1E48" : category.color;
+              final bgColor = _getColorFromHex(colorHex);
+
+              return Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 60,
+                      width: 60,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: bgColor,
+                        boxShadow: [
+                          BoxShadow(
+                            color: bgColor.withValues(alpha: 0.3),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: category.icon == 'checkroom'
+                            ? const Text('👕', style: TextStyle(fontSize: 26))
+                            : Icon(
+                                _getIconData(category.icon),
+                                color: Colors.white,
+                                size: 28,
+                              ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      category.name.toUpperCase(),
+                      style: const TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.textPrimary,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      },
+      loading: () => const SizedBox(
+        height: 100,
+        child: Center(child: CircularProgressIndicator()),
+      ),
+      error: (err, stack) => SizedBox(
+        height: 100,
+        child: Center(child: Text('Error: $err')),
+      ),
+    );
+  }
+}
