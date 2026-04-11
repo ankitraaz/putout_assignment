@@ -185,35 +185,30 @@ class DealCard extends StatelessWidget {
                         ),
                       ),
                     )
-                  : Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Center(
+                    : Center(
                         child: Material(
                           color: AppColors.kutootRed,
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(50),
                           elevation: 4,
-                          shadowColor: AppColors.kutootRed.withValues(alpha: 0.4),
+                          shadowColor: AppColors.kutootRed.withValues(alpha: 0.2),
                           child: InkWell(
                             onTap: onTap,
-                            borderRadius: BorderRadius.circular(12),
-                            child: Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              alignment: Alignment.center,
+                            borderRadius: BorderRadius.circular(50),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                               child: Text(
                                 buttonText,
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 10,
                                   fontWeight: FontWeight.w900,
-                                  letterSpacing: 1.0,
+                                  letterSpacing: 1.5,
                                 ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
             ),
           ],
         ),

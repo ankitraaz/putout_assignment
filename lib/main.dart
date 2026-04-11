@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kuttot/core/theme/app_theme.dart';
 import 'package:kuttot/core/constants/app_strings.dart';
+import 'package:kuttot/core/providers/auth_provider.dart';
 import 'package:kuttot/features/shell/presentation/shell_screen.dart';
 import 'package:kuttot/features/splash/presentation/splash_screen.dart';
+import 'package:kuttot/features/auth/presentation/login_screen.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -38,7 +40,30 @@ class _MyAppState extends State<MyApp> {
                 });
               },
             )
-          : const ShellScreen(),
+          : const _AuthGate(),
     );
+  }
+}
+
+/// Watches auth state and routes to Login or Shell accordingly
+class _AuthGate extends ConsumerWidget {
+  const _AuthGate();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authProvider);
+
+    // Still checking SharedPreferences — show blank screen (no flash)
+    if (authState.status == AuthStatus.checking) {
+      return const Scaffold(
+        backgroundColor: Color(0xFFFFF8F5),
+        body: SizedBox.shrink(),
+      );
+    }
+
+    if (authState.status == AuthStatus.authenticated) {
+      return const ShellScreen();
+    }
+    return const LoginScreen();
   }
 }

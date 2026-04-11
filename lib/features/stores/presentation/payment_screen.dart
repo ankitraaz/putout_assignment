@@ -762,8 +762,8 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
                     ],
                   ),
                   Image.asset(
-                    'assets/images/kutoot_logo.png',
-                    height: 24,
+                    'assets/images/screen.png',
+                    height: 28,
                     fit: BoxFit.contain,
                   ),
                 ],

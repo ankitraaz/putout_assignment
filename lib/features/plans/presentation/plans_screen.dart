@@ -122,16 +122,18 @@ class _HeroSection extends StatelessWidget {
             top: 24,
             left: 24,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: BorderRadius.circular(100),
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+                filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.7),
-                    borderRadius: BorderRadius.circular(24),
+                    borderRadius: BorderRadius.circular(100),
+                    border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
                   ),
                   child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Container(
                         width: 8,
@@ -145,9 +147,10 @@ class _HeroSection extends StatelessWidget {
                       const Text(
                         '323 CUSTOMERS TRANSACTED TODAY',
                         style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w800,
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
                           color: Color(0xFF221A14),
+                          letterSpacing: 0.5,
                         ),
                       ),
                     ],
@@ -162,40 +165,55 @@ class _HeroSection extends StatelessWidget {
             left: 24,
             right: 24,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(32),
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
                 child: Container(
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.85),
-                    borderRadius: BorderRadius.circular(24),
+                    color: Colors.white.withValues(alpha: 0.7),
+                    borderRadius: BorderRadius.circular(32),
+                    border: Border.all(color: Colors.white.withValues(alpha: 0.4)),
+                    boxShadow: const [
+                       BoxShadow(
+                         color: Colors.black26,
+                         blurRadius: 25,
+                         offset: Offset(0, 10),
+                       ),
+                    ],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            store.name,
-                            style: const TextStyle(
-                              fontSize: 32,
-                              fontWeight: FontWeight.w900,
-                              color: Color(0xFF221A14),
-                              letterSpacing: -1.0,
+                          Expanded(
+                            child: Text(
+                              store.name,
+                              style: const TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w900,
+                                color: Color(0xFF221A14),
+                                letterSpacing: -1.0,
+                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
+                          const SizedBox(width: 12),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                             decoration: BoxDecoration(
                               color: const Color(0xFFFFE080),
-                              borderRadius: BorderRadius.circular(24),
+                              borderRadius: BorderRadius.circular(6),
                             ),
                             child: Row(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(Icons.star, size: 16, color: Color(0xFF231B00)),
-                                SizedBox(width: 4),
+                                const Icon(Icons.star, size: 16, color: Color(0xFF231B00)),
+                                const SizedBox(width: 4),
                                 Text(
                                   store.rating.toString(),
                                   style: const TextStyle(
@@ -209,40 +227,63 @@ class _HeroSection extends StatelessWidget {
                           ),
                         ],
                       ),
+                      const SizedBox(height: 4),
                       Text(
                         '${store.category} • ${store.address}',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xFF594042),
+                          color: const Color(0xFF594042).withValues(alpha: 0.8),
+                          letterSpacing: -0.5,
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 16),
-                      const Row(
+                      Row(
                         children: [
-                          Icon(Icons.near_me, size: 14, color: Color(0xFFAE1E3F)),
-                          SizedBox(width: 4),
-                          Flexible(
-                            child: Text(
-                              '1.2 KM AWAY',
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w800,
-                              ),
-                              overflow: TextOverflow.ellipsis,
+                          Expanded(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: const [
+                                Icon(Icons.near_me, size: 18, color: Color(0xFFAE1E3F)),
+                                SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    '1.2 KM\nAWAY',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 0.5,
+                                      color: Color(0xFF221A14),
+                                      height: 1.3,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          SizedBox(width: 12),
-                          Icon(Icons.schedule, size: 14, color: Color(0xFFAE1E3F)),
-                          SizedBox(width: 4),
-                          Flexible(
-                            child: Text(
-                              '11:00 AM – 10:00 PM',
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w800,
-                              ),
-                              overflow: TextOverflow.ellipsis,
+                          const SizedBox(width: 12),
+                          Expanded(
+                            flex: 2,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: const [
+                                Icon(Icons.schedule, size: 18, color: Color(0xFFAE1E3F)),
+                                SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    '11:00 AM –\n10:00 PM',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 0.5,
+                                      color: Color(0xFF221A14),
+                                      height: 1.3,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -441,7 +482,9 @@ class _DealsMatrix extends ConsumerWidget {
             itemBuilder: (context, index) {
               final groupDeals = index == 0 ? group1 : group2;
               return _DealsGroup(
-                cards: groupDeals.map((deal) {
+                cards: groupDeals.asMap().entries.map((entry) {
+                  final dealIndex = entry.key;
+                  final deal = entry.value;
                   return _CouponCard(
                     title: deal.highlightText,
                     subtitle: deal.title,
@@ -449,7 +492,7 @@ class _DealsMatrix extends ConsumerWidget {
                     badgeColor: deal.category == 'Bank Offers' ? const Color(0xFF725C00) : const Color(0xFFAE1E3F),
                     tag: deal.category == 'Bank Offers' ? '' : 'Elite',
                     code: deal.id,
-                    isSecondaryAction: deal.category == 'Bank Offers',
+                    isSecondaryAction: dealIndex == 1, // Bottom card button is black
                   );
                 }).toList(),
               );
@@ -475,9 +518,13 @@ class _DealsGroup extends StatelessWidget {
       width: 300,
       child: Column(
         children: [
-          Expanded(child: cards[0]),
-          const SizedBox(height: 16),
-          Expanded(child: cards[1]),
+          if (cards.isNotEmpty) Expanded(child: cards[0]),
+          if (cards.length > 1) const SizedBox(height: 16),
+          if (cards.length > 1) Expanded(child: cards[1]),
+          if (cards.length == 1) ...[
+            const SizedBox(height: 16),
+            const Spacer(),
+          ]
         ],
       ),
     );
@@ -664,12 +711,12 @@ class _CouponCard extends ConsumerWidget {
           // Custom Cutouts (The half circles)
           Positioned(
             left: -8,
-            top: 130, // Adjusted to match the visual alignment of the divider
+            bottom: 44, // Align exactly centered on the 52px footer
             child: _Cutout(),
           ),
           Positioned(
             right: -8,
-            top: 130,
+            bottom: 44,
             child: _Cutout(),
           ),
           
@@ -677,7 +724,7 @@ class _CouponCard extends ConsumerWidget {
           Positioned(
             left: 20,
             right: 20,
-            top: 138,
+            bottom: 51,
             child: _DashedLine(),
           ),
         ],

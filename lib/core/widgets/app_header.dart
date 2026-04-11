@@ -83,7 +83,7 @@ class AppHeader extends ConsumerWidget {
 
           // Center: Logo Image
           Image.asset(
-            'assets/images/kutoot_logo.png',
+            'assets/images/screen.png',
             height: 48,
             fit: BoxFit.contain,
           ),

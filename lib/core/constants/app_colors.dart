@@ -17,7 +17,7 @@ class AppColors {
   // Backgrounds
   static const Color scaffoldBg = Color(0xFFFFF8F5); // surface
   static const Color cardBg = Color(0xFFFFFFFF); // lowest surface
-  static const Color darkBg = Color(0xFF1A1A2E); 
+  static const Color darkBg = Color(0xFF1A1A2E);
 
   // Surface Containers
   static const Color surfaceContainerLow = Color(0xFFFFF1E8);

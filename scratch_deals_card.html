@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kutoot - Deals &amp; Offers</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .deal-card {
+            background: white;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+        .deal-card:active {
+            transform: scale(0.98);
+        }
+        .benefit-badge {
+            background: linear-gradient(135deg, #AE1E3F 0%, #8b1832 100%);
+        }
+        .dotted-divider {
+            background-image: linear-gradient(to bottom, #e1bec0 40%, rgba(255, 255, 255, 0) 0%);
+            background-position: center;
+            background-size: 1.5px 8px;
+            background-repeat: repeat-y;
+            width: 1.5px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "inverse-primary": "#ffb2b8",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#594042",
+                        "surface-container-high": "#f5e5db",
+                        "on-secondary-container": "#612500",
+                        "secondary": "#a04100",
+                        "on-primary-container": "#ffc3c7",
+                        "on-tertiary-container": "#4d3e00",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#cda700",
+                        "primary": "#AE1E3F",
+                        "brand-crimson": "#AE1E3F",
+                        "brand-orange": "#EA6B1E",
+                        "dark-charcoal": "#3B322B",
+                        "tertiary-fixed": "#ffe080",
+                        "surface-variant": "#efe0d5",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed": "#231b00",
+                        "inverse-surface": "#382f28",
+                        "inverse-on-surface": "#feeee3",
+                        "primary-fixed-dim": "#ffb2b8",
+                        "on-background": "#221a14",
+                        "surface": "#fff8f5",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#221a14",
+                        "on-secondary-fixed": "#341000",
+                        "background": "#fff8f5",
+                        "secondary-fixed": "#ffdbcb",
+                        "outline": "#8d7072",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#fff1e8",
+                        "surface-tint": "#b42343",
+                        "surface-container": "#fbebe0",
+                        "on-tertiary-fixed-variant": "#564500",
+                        "secondary-container": "#ff7a2e",
+                        "on-primary-fixed": "#40000f",
+                        "surface-bright": "#fff8f5",
+                        "secondary-fixed-dim": "#ffb693",
+                        "surface-container-highest": "#efe0d5",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#ffdadb",
+                        "tertiary-fixed-dim": "#edc206",
+                        "surface-dim": "#e7d7cd",
+                        "on-secondary-fixed-variant": "#7a3000",
+                        "on-primary-fixed-variant": "#91002d",
+                        "tertiary": "#725c00",
+                        "primary-container": "#ae1e3f",
+                        "outline-variant": "#e1bec0"
+                    },
+                    fontFamily: {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-[#FBF8F6] text-on-background min-h-screen pb-32">
+<!-- Header -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-6 h-16 bg-white/90 backdrop-blur-xl border-b border-black/5">
+<div class="flex items-center gap-1.5 bg-brand-orange/10 px-3 py-1.5 rounded-full border border-brand-orange/20">
+<span class="material-symbols-outlined text-[16px] text-brand-orange active-fill" data-icon="location_on">location_on</span>
+<span class="font-headline font-extrabold text-[11px] tracking-tight text-brand-orange uppercase">Mumbai ▾</span>
+</div>
+<div class="flex-1 flex justify-center px-4">
+<img alt="Kutoot" class="object-contain h-[2.8rem]" src="https://lh3.googleusercontent.com/aida/ADBb0uhfpiM6_Gud-pXWpjukL8AjzfcVEcjML3mMpqp4Q2jNf64lOuts_ajJxh0lYmk4MZGisTFWetVg66ifVPVygCYgczjEtykxMdZvBbXOx3nUhMHVjFjAfotA6AYJ3q6W3keREMkoAXvlISGvQ6DrTfj1QQ64Ak3ZqyDuhYgotABJGsXuM7n_j2XNVOp37aNA3hXQY5F3XBXrt_oXNsSjJv4lQoQUt8z5wvNtYgT_r1VikvKl5a1hB36-CLe2UnGp2JMREMuRqsEi1a0"/>
+</div>
+<div class="flex items-center">
+<button class="bg-brand-crimson text-white text-[10px] font-black px-4 py-2 rounded-full uppercase tracking-widest active:scale-95 transition-transform shadow-lg shadow-brand-crimson/20">Upgrade</button>
+</div>
+</header>
+<main class="pt-24 px-5 max-w-2xl mx-auto">
+<!-- Search Bar -->
+<section class="mb-6">
+<div class="relative group">
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-outline">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="w-full bg-white border border-black/5 shadow-sm rounded-2xl py-4 pl-12 pr-6 focus:ring-2 focus:ring-primary/20 text-on-surface placeholder-on-surface-variant/60 transition-all" placeholder="Search brands, banks or items..." type="text"/>
+</div>
+</section>
+<!-- Category Filters -->
+<section class="mb-8 -mx-5 px-5 overflow-x-auto no-scrollbar flex gap-2">
+<button class="px-5 py-2.5 rounded-full bg-brand-orange text-white font-bold text-sm whitespace-nowrap shadow-md shadow-brand-orange/20">All</button>
+<button class="px-5 py-2.5 rounded-full bg-white border border-black/5 text-on-surface/70 font-bold text-sm whitespace-nowrap hover:bg-surface-variant transition-colors">Merchant Deals</button>
+<button class="px-5 py-2.5 rounded-full bg-white border border-black/5 text-on-surface/70 font-bold text-sm whitespace-nowrap hover:bg-surface-variant transition-colors">Bank Offers</button>
+<button class="px-5 py-2.5 rounded-full bg-white border border-black/5 text-on-surface/70 font-bold text-sm whitespace-nowrap hover:bg-surface-variant transition-colors">Store Rewards</button>
+</section>
+<!-- Refined Deal Cards Feed -->
+<div class="space-y-5">
+<!-- Deal Card 1: Applied State -->
+<div class="deal-card rounded-2xl flex shadow-[0_4px_16px_rgba(0,0,0,0.04)] overflow-hidden">
+<div class="flex-1 p-5 pr-4">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center overflow-hidden flex-shrink-0 border border-black/5">
+<img alt="Starbucks logo" class="w-8 h-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9B6CYmI9R09IdOV2c35ExXZnKFoUecJlQA6eG-KBRN1MoSRy5pQbmd80SrtvcN--UKEK62asLS1Zvv8yfLkzE4GO0MvQU_1EVTbRCwVAP2LKjRkT9XLccMwgIlpiNa1ypdwYuyrk4VVb3x8BpgfDMplOI-9t2QS4iab-CR8lPPNRazs0eWmicELk_l07vNBqx-xdBuBWniVSpoYpto4D0IrqvwxkZKvZMOahLPGEtT2pHaat6Db0OJIqdsk5HEfaVOTrwUYMHSRc"/>
+</div>
+<div>
+<span class="text-[9px] font-extrabold uppercase tracking-[0.1em] text-on-surface-variant/60 block mb-0.5">Merchant Offer</span>
+<h3 class="font-bold text-dark-charcoal text-[15px] leading-tight">Starbucks Reserve</h3>
+</div>
+</div>
+<div class="space-y-1">
+<p class="text-[32px] font-black text-brand-crimson leading-none tracking-tight">60% OFF</p>
+<p class="text-on-surface-variant/70 text-[11px] font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">calendar_today</span>
+                            Valid till 30 Nov • Up to ₹200
+                        </p>
+</div>
+</div>
+<div class="dotted-divider my-4"></div>
+<div class="w-[100px] flex flex-col items-center justify-center p-4 bg-green-50/30">
+<div class="flex flex-col items-center gap-1.5 text-green-600">
+<div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+<span class="material-symbols-outlined font-bold text-2xl active-fill" data-icon="check_circle">check_circle</span>
+</div>
+<span class="text-[9px] font-black uppercase tracking-widest">APPLIED</span>
+</div>
+</div>
+</div>
+<!-- Deal Card 2: Bank Offer -->
+<div class="deal-card rounded-2xl flex shadow-[0_4px_16px_rgba(0,0,0,0.04)] overflow-hidden">
+<div class="flex-1 p-5 pr-4">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center overflow-hidden flex-shrink-0 border border-black/5">
+<img alt="HDFC logo" class="w-8 h-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzA2X9BYGR7gByqGAPu6tPUsv9t_GdHARDPyKzumvL54c1C014QJfYHPdTTsMJjgXlpSmq0376Zh8WxL5Z0ErAl8gi01VrVzdx8yJz2Llgz8HVidncCGwvtxwAT67I2EXDUsH8ptE9FrT8yaH9zjC67BGEuc-9TLWQm7KI_MRUgIvMFlce0ZJMxxxacrgWWZqyRMU49Fvm8ktX-Z3SFoIxT7EvB3ZdmPGTtvzbPvdFB8P-nQcXUC2qEExNe6S4iEwpmfdY5Zh9_Dw"/>
+</div>
+<div>
+<span class="text-[9px] font-extrabold uppercase tracking-[0.1em] text-brand-orange block mb-0.5">Bank Privilege</span>
+<h3 class="font-bold text-dark-charcoal text-[15px] leading-tight">HDFC Bank Cards</h3>
+</div>
+</div>
+<div class="space-y-1">
+<p class="text-[32px] font-black text-brand-crimson leading-none tracking-tight">₹500 BACK</p>
+<p class="text-on-surface-variant/70 text-[11px] font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">timer</span>
+                            Ends in 2 days • Min. ₹1,999
+                        </p>
+</div>
+</div>
+<div class="dotted-divider my-4"></div>
+<div class="w-[100px] flex flex-col items-center justify-center p-4">
+<button class="bg-brand-crimson text-white w-full py-3 rounded-xl text-[10px] font-black tracking-widest shadow-md shadow-brand-crimson/20 active:scale-95 transition-all">
+                        APPLY
+                    </button>
+</div>
+</div>
+<!-- Deal Card 3: Store Reward -->
+<div class="deal-card rounded-2xl flex shadow-[0_4px_16px_rgba(0,0,0,0.04)] overflow-hidden">
+<div class="flex-1 p-5 pr-4">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center overflow-hidden flex-shrink-0 border border-black/5">
+<img alt="Nature's Basket logo" class="w-8 h-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbVglknsYDgERJBOjW_PZL8GJ1YDi2NX7klg3xEKPAQxQLH6Dz-gkrFssXdkj7rY3akVwgBs_n05_OZ-u3FjoAhKZNUbiJli7se3MEYjzp38NYwpjSCg6VGrAZRC7ZRhg-pqmhQ1SAFIGrm0ne_UhB4o8peumwfSVFMmIz9SsHh-nw2zlDs0JOKrYL8fJJfZRUGf7B48lSWThkMbUOa5IxogBms_cLuKosLhB72SwP4ZSt52Dmm0DKQ61HCykW_Zy5fsRHAWy0nIY"/>
+</div>
+<div>
+<span class="text-[9px] font-extrabold uppercase tracking-[0.1em] text-on-surface-variant/60 block mb-0.5">Store Reward</span>
+<h3 class="font-bold text-dark-charcoal text-[15px] leading-tight">Nature's Basket</h3>
+</div>
+</div>
+<div class="space-y-1">
+<p class="text-[32px] font-black text-brand-crimson leading-none tracking-tight">FREE SHIP</p>
+<p class="text-on-surface-variant/70 text-[11px] font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">local_shipping</span>
+                            Next 3 fresh orders • Member exclusive
+                        </p>
+</div>
+</div>
+<div class="dotted-divider my-4"></div>
+<div class="w-[100px] flex flex-col items-center justify-center p-4">
+<button class="bg-brand-crimson text-white w-full py-3 rounded-xl text-[10px] font-black tracking-widest shadow-md shadow-brand-crimson/20 active:scale-95 transition-all">
+                        REDEEM
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button -->
+<div class="fixed bottom-24 right-6 z-[60]">
+<button class="w-14 h-14 bg-brand-crimson text-white rounded-full flex items-center justify-center shadow-[0_8px_24px_rgba(174,30,63,0.4)] active:scale-90 transition-all border-2 border-white/20">
+<span class="material-symbols-outlined text-2xl active-fill" data-icon="qr_code_scanner">qr_code_scanner</span>
+</button>
+</div>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 w-full px-4 mb-3 z-50">
+<div class="max-w-md mx-auto flex justify-between items-center h-20 bg-white/95 backdrop-blur-xl shadow-[0_-8px_30px_rgba(0,0,0,0.06)] rounded-[2.5rem] border border-black/5 px-4">
+<button class="flex-1 flex flex-col items-center justify-center text-black/30 py-2">
+<span class="material-symbols-outlined text-[26px]" data-icon="home">home</span>
+<span class="font-headline text-[9px] font-bold uppercase tracking-widest mt-1">Home</span>
+</button>
+<button class="flex-1 flex flex-col items-center justify-center py-2 text-brand-crimson">
+<span class="material-symbols-outlined text-[28px] active-fill" data-icon="sell">sell</span>
+<span class="font-headline text-[9px] font-black uppercase tracking-widest mt-1">Rewards</span>
+</button>
+<button class="flex-1 flex flex-col items-center justify-center text-black/30 py-2">
+<span class="material-symbols-outlined text-[26px]" data-icon="confirmation_number">confirmation_number</span>
+<span class="font-headline text-[9px] font-bold uppercase tracking-widest mt-1">Plans</span>
+</button>
+<button class="flex-1 flex flex-col items-center justify-center text-black/30 py-2">
+<span class="material-symbols-outlined text-[26px]" data-icon="person">person</span>
+<span class="font-headline text-[9px] font-bold uppercase tracking-widest mt-1">Account</span>
+</button>
+</div>
+</nav>
+</body></html>
