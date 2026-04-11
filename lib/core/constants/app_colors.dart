@@ -15,14 +15,19 @@ class AppColors {
   static const Color accentOrange = Color(0xFFFFA726);
 
   // Backgrounds
-  static const Color scaffoldBg = Color(0xFFF8F8F8);
-  static const Color cardBg = Color(0xFFFFFFFF);
-  static const Color darkBg = Color(0xFF1A1A2E);
+  static const Color scaffoldBg = Color(0xFFFFF8F5); // surface
+  static const Color cardBg = Color(0xFFFFFFFF); // lowest surface
+  static const Color darkBg = Color(0xFF1A1A2E); 
+
+  // Surface Containers
+  static const Color surfaceContainerLow = Color(0xFFFFF1E8);
+  static const Color surfaceContainer = Color(0xFFFBEBE0);
+  static const Color surfaceContainerHighest = Color(0xFFEFE0D5);
 
   // Text
-  static const Color textPrimary = Color(0xFF1C1C1C);
-  static const Color textSecondary = Color(0xFF6B7280);
-  static const Color textLight = Color(0xFF9CA3AF);
+  static const Color textPrimary = Color(0xFF221A14); // on_background
+  static const Color textSecondary = Color(0xFF594042); // on_surface_variant
+  static const Color textLight = Color(0xFF8D7072); // outline
   static const Color textWhite = Color(0xFFFFFFFF);
 
   // Status

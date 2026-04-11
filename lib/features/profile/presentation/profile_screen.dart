@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kuttot/core/constants/app_colors.dart';
 import 'package:kuttot/core/providers/profile_provider.dart';
+import 'package:kuttot/features/profile/presentation/transaction_history_screen.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -37,7 +38,14 @@ class ProfileScreen extends ConsumerWidget {
             const SizedBox(height: 16),
 
             _buildSection(context, 'Activity', [
-              _MenuItem(icon: Icons.receipt_long_outlined, label: 'Order History'),
+              _MenuItem(
+                icon: Icons.receipt_long_outlined, 
+                label: 'Order History',
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const TransactionHistoryScreen()),
+                ),
+              ),
               _MenuItem(icon: Icons.star_outline, label: 'My Reviews', badge: '12'),
               _MenuItem(icon: Icons.favorite_outline, label: 'Wishlist', badge: '8'),
               _MenuItem(icon: Icons.loyalty_outlined, label: 'Reward History'),

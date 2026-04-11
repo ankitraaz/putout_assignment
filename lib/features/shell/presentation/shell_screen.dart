@@ -28,6 +28,7 @@ class ShellScreen extends ConsumerWidget {
     return Scaffold(
       body: IndexedStack(index: currentIndex, children: screens),
       floatingActionButton: FloatingActionButton(
+        heroTag: null,
         onPressed: () {},
         backgroundColor: AppColors.kutootRed,
         elevation: 8,
@@ -52,7 +53,7 @@ class ShellScreen extends ConsumerWidget {
             filter: ImageFilter.blur(sigmaX: 16.0, sigmaY: 16.0),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.85),
+                color: Colors.white.withValues(alpha: 0.8),
                 border: const Border(
                   top: BorderSide(
                     color: Color(0x1AFFDADB),

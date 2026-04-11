@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kuttot/core/constants/app_colors.dart';
 import 'package:kuttot/core/providers/app_providers.dart';
+import 'package:kuttot/features/shell/presentation/shell_screen.dart';
 
 class CategoryRow extends ConsumerWidget {
   const CategoryRow({super.key});
@@ -49,17 +50,22 @@ class CategoryRow extends ConsumerWidget {
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 24),
 
             itemCount: categories.length + 1, // +1 for "ALL"
             itemBuilder: (context, index) {
               if (index == 0) {
                 // "ALL" Category
                 return Padding(
-                  padding: const EdgeInsets.only(right: 20),
-                  child: Column(
-                    children: [
-                      Container(
+                  padding: const EdgeInsets.only(right: 24),
+                  child: GestureDetector(
+                    onTap: () {
+                      ref.read(selectedCategoryProvider.notifier).state = 'All';
+                      ref.read(bottomNavIndexProvider.notifier).state = 2;
+                    },
+                    child: Column(
+                      children: [
+                        Container(
                         height: 64,
                         width: 64,
                         decoration: BoxDecoration(
@@ -88,8 +94,9 @@ class CategoryRow extends ConsumerWidget {
                       ),
                     ],
                   ),
-                );
-              }
+                ),
+              );
+            }
 
               final category = categories[index - 1];
               final isFashion = category.name.toLowerCase() == 'fashion';
@@ -98,19 +105,20 @@ class CategoryRow extends ConsumerWidget {
               final bgColor = _getColorFromHex(colorHex);
 
               return Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: Column(
-                  children: [
-                    Container(
+                padding: const EdgeInsets.only(right: 24),
+                child: GestureDetector(
+                  onTap: () {
+                    ref.read(selectedCategoryProvider.notifier).state = category.name;
+                    ref.read(bottomNavIndexProvider.notifier).state = 2;
+                  },
+                  child: Column(
+                    children: [
+                      Container(
                       height: 64,
                       width: 64,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
                         color: bgColor.withValues(alpha: 0.1),
-                        border: Border.all(
-                          color: bgColor.withValues(alpha: 0.2),
-                          width: 1,
-                        ),
                       ),
                       child: Center(
                         child: category.icon == 'checkroom'
@@ -136,8 +144,9 @@ class CategoryRow extends ConsumerWidget {
                     ),
                   ],
                 ),
-              );
-            },
+              ),
+            );
+          },
           ),
         );
       },

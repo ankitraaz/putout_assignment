@@ -1,0 +1,272 @@
+[
+  {
+    "id": "deal_1",
+    "category": "Merchant Deals",
+    "iconUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuA9B6CYmI9R09IdOV2c35ExXZnKFoUecJlQA6eG-KBRN1MoSRy5pQbmd80SrtvcN--UKEK62asLS1Zvv8yfLkzE4GO0MvQU_1EVTbRCwVAP2LKjRkT9XLccMwgIlpiNa1ypdwYuyrk4VVb3x8BpgfDMplOI-9t2QS4iab-CR8lPPNRazs0eWmicELk_l07vNBqx-xdBuBWniVSpoYpto4D0IrqvwxkZKvZMOahLPGEtT2pHaat6Db0OJIqdsk5HEfaVOTrwUYMHSRc",
+    "title": "Starbucks Reserve",
+    "highlightText": "60% OFF",
+    "validityText": "Valid till 30 Nov • Up to ₹200",
+    "buttonText": "APPLY",
+    "highlightIconString": "calendar_today"
+  },
+  {
+    "id": "deal_2",
+    "category": "Bank Offers",
+    "iconUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuDzA2X9BYGR7gByqGAPu6tPUsv9t_GdHARDPyKzumvL54c1C014QJfYHPdTTsMJjgXlpSmq0376Zh8WxL5Z0ErAl8gi01VrVzdx8yJz2Llgz8HVidncCGwvtxwAT67I2EXDUsH8ptE9FrT8yaH9zjC67BGEuc-9TLWQm7KI_MRUgIvMFlce0ZJMxxxacrgWWZqyRMU49Fvm8ktX-Z3SFoIxT7EvB3ZdmPGTtvzbPvdFB8P-nQcXUC2qEExNe6S4iEwpmfdY5Zh9_Dw",
+    "title": "HDFC Bank Cards",
+    "highlightText": "₹500 BACK",
+    "validityText": "Ends in 2 days • Min. ₹1,999",
+    "buttonText": "APPLY",
+    "highlightIconString": "timer"
+  },
+  {
+    "id": "deal_3",
+    "category": "Store Rewards",
+    "iconUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuDbVglknsYDgERJBOjW_PZL8GJ1YDi2NX7klg3xEKPAQxQLH6Dz-gkrFssXdkj7rY3akVwgBs_n05_OZ-u3FjoAhKZNUbiJli7se3MEYjzp38NYwpjSCg6VGrAZRC7ZRhg-pqmhQ1SAFIGrm0ne_UhB4o8peumwfSVFMmIz9SsHh-nw2zlDs0JOKrYL8fJJfZRUGf7B48lSWThkMbUOa5IxogBms_cLuKosLhB72SwP4ZSt52Dmm0DKQ61HCykW_Zy5fsRHAWy0nIY",
+    "title": "Nature's Basket",
+    "highlightText": "FREE SHIP",
+    "validityText": "Next 3 fresh orders • Member",
+    "buttonText": "REDEEM",
+    "highlightIconString": "local_shipping"
+  },
+  {
+    "id": "deal_4",
+    "category": "Merchant Deals",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/882/882826.png",
+    "title": "Zomato",
+    "highlightText": "50% OFF",
+    "validityText": "Valid till tonight • Up to ₹150",
+    "buttonText": "APPLY",
+    "highlightIconString": "fastfood"
+  },
+  {
+    "id": "deal_5",
+    "category": "Bank Offers",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/6124/6124997.png",
+    "title": "ICICI Credit Cards",
+    "highlightText": "10% CASH",
+    "validityText": "Ends 15 Dec • Electronics only",
+    "buttonText": "APPLY",
+    "highlightIconString": "credit_card"
+  },
+  {
+    "id": "deal_6",
+    "category": "Store Rewards",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/1162/1162499.png",
+    "title": "Croma Electronics",
+    "highlightText": "EARN 5X",
+    "validityText": "Valid on all home appliances",
+    "buttonText": "REDEEM",
+    "highlightIconString": "redeem"
+  },
+  {
+    "id": "deal_7",
+    "category": "Merchant Deals",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/731/731985.png",
+    "title": "Apple Store",
+    "highlightText": "₹5K OFF",
+    "validityText": "Instant discount on iPhone 15",
+    "buttonText": "APPLY",
+    "highlightIconString": "smartphone"
+  },
+  {
+    "id": "deal_8",
+    "category": "Bank Offers",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/2721/2721118.png",
+    "title": "Axis Bank",
+    "highlightText": "BOGO",
+    "validityText": "Buy 1 Get 1 on movie tickets",
+    "buttonText": "APPLY",
+    "highlightIconString": "movie"
+  },
+  {
+    "id": "deal_9",
+    "category": "Merchant Deals",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/888/888846.png",
+    "title": "Uber Rides",
+    "highlightText": "FLAT 20%",
+    "validityText": "Valid on next 5 Premier rides",
+    "buttonText": "APPLY",
+    "highlightIconString": "directions_car"
+  },
+  {
+    "id": "deal_10",
+    "category": "Store Rewards",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/3673/3673003.png",
+    "title": "Nike Flagship",
+    "highlightText": "20% OFF",
+    "validityText": "On select Air Max collections",
+    "buttonText": "REDEEM",
+    "highlightIconString": "shopping_bag"
+  },
+  {
+    "id": "deal_11",
+    "category": "Bank Offers",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/5968/5968266.png",
+    "title": "SBI SimplyClick",
+    "highlightText": "10X PTS",
+    "validityText": "On all online spends this week",
+    "buttonText": "APPLY",
+    "highlightIconString": "stars"
+  },
+  {
+    "id": "deal_12",
+    "category": "Merchant Deals",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/1000/1000142.png",
+    "title": "Swiggy Instamart",
+    "highlightText": "FREE DEL",
+    "validityText": "No minimum order value",
+    "buttonText": "APPLY",
+    "highlightIconString": "local_shipping"
+  },
+  {
+    "id": "deal_13",
+    "category": "Store Rewards",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/869/869027.png",
+    "title": "Lifestyle Stores",
+    "highlightText": "₹1000 V.",
+    "validityText": "Voucher on min spend ₹5000",
+    "buttonText": "REDEEM",
+    "highlightIconString": "card_giftcard"
+  },
+  {
+    "id": "deal_14",
+    "category": "Merchant Deals",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/882/882821.png",
+    "title": "MakeMyTrip",
+    "highlightText": "15% OFF",
+    "validityText": "Domestic flights valid till Sun",
+    "buttonText": "APPLY",
+    "highlightIconString": "flight"
+  },
+  {
+    "id": "deal_15",
+    "category": "Bank Offers",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/5968/5968144.png",
+    "title": "Kotak 811",
+    "highlightText": "FLAT ₹250",
+    "validityText": "On utility bill payments",
+    "buttonText": "APPLY",
+    "highlightIconString": "receipt"
+  },
+  {
+    "id": "deal_16",
+    "category": "Store Rewards",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/3673/3673010.png",
+    "title": "Sephora",
+    "highlightText": "FREE KIT",
+    "validityText": "Get a sample kit on ₹3000 spend",
+    "buttonText": "REDEEM",
+    "highlightIconString": "clean_hands"
+  },
+  {
+    "id": "deal_17",
+    "category": "Merchant Deals",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/732/732221.png",
+    "title": "BookMyShow",
+    "highlightText": "25% OFF",
+    "validityText": "Weekend shows max ₹150",
+    "buttonText": "APPLY",
+    "highlightIconString": "movie_creation"
+  },
+  {
+    "id": "deal_19",
+    "category": "Store Rewards",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/3595/3595455.png",
+    "title": "Westside",
+    "highlightText": "FLAT ₹500",
+    "validityText": "Apply at billing counter • Min. ₹2,999",
+    "buttonText": "APPLY",
+    "highlightIconString": "receipt"
+  },
+  {
+    "id": "deal_20",
+    "category": "Store Rewards",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/3595/3595604.png",
+    "title": "Shoppers Stop",
+    "highlightText": "20% OFF",
+    "validityText": "Scan QR at checkout to apply",
+    "buttonText": "REDEEM",
+    "highlightIconString": "qr_code_scanner"
+  },
+  {
+    "id": "deal_21",
+    "category": "Merchant Deals",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/869/869027.png",
+    "title": "Max Fashion",
+    "highlightText": "EARN ₹200",
+    "validityText": "Pay via app at store counter",
+    "buttonText": "APPLY",
+    "highlightIconString": "account_balance_wallet"
+  },
+  {
+    "id": "deal_22",
+    "category": "Store Rewards",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/1162/1162499.png",
+    "title": "Reliance Digital",
+    "highlightText": "FREE GIFT",
+    "validityText": "Show barcode at POS counter",
+    "buttonText": "REDEEM",
+    "highlightIconString": "card_giftcard"
+  },
+  {
+    "id": "deal_23",
+    "category": "Merchant Deals",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/882/882826.png",
+    "title": "Domino's Pizza",
+    "highlightText": "BOGO FREE",
+    "validityText": "Valid on dine-in bill payment",
+    "buttonText": "APPLY",
+    "highlightIconString": "local_pizza"
+  },
+  {
+    "id": "WESTSIDE20",
+    "category": "Store Rewards",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/882/882826.png",
+    "title": "Westside Exclusive",
+    "highlightText": "20% OFF",
+    "validityText": "PROMO CODE",
+    "buttonText": "APPLY",
+    "highlightIconString": "percent"
+  },
+  {
+    "id": "FESTIVE500",
+    "category": "Store Rewards",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/882/882826.png",
+    "title": "Westside Special",
+    "highlightText": "FLAT ₹500",
+    "validityText": "MIN SPEND ₹5000",
+    "buttonText": "APPLY",
+    "highlightIconString": "payments"
+  },
+  {
+    "id": "ZARA20",
+    "category": "Store Rewards",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/882/882826.png",
+    "title": "Zara Season Sale",
+    "highlightText": "20% OFF",
+    "validityText": "Apparel Only",
+    "buttonText": "APPLY",
+    "highlightIconString": "percent"
+  },
+  {
+    "id": "HDFC15",
+    "category": "Bank Offers",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/882/882826.png",
+    "title": "HDFC Card Offer",
+    "highlightText": "15% OFF",
+    "validityText": "Auto Applied",
+    "buttonText": "APPLY",
+    "highlightIconString": "credit_card"
+  },
+  {
+    "id": "SBUX50",
+    "category": "Store Rewards",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/882/882826.png",
+    "title": "Starbucks Rewards",
+    "highlightText": "50% OFF",
+    "validityText": "Cold Brews Only",
+    "buttonText": "APPLY",
+    "highlightIconString": "percent"
+  }
+]

@@ -3,6 +3,7 @@ import 'package:kuttot/data/models/category_model.dart';
 import 'package:kuttot/data/models/reward_model.dart';
 import 'package:kuttot/data/models/store_model.dart';
 import 'package:kuttot/data/models/plan_model.dart';
+import 'package:kuttot/data/models/deal_model.dart';
 import 'package:kuttot/data/repositories/data_repository.dart';
 
 final categoriesProvider = FutureProvider<List<CategoryModel>>((ref) async {
@@ -25,9 +26,19 @@ final plansProvider = FutureProvider<List<PlanModel>>((ref) async {
   return repository.getPlans();
 });
 
+final dealsProvider = FutureProvider<List<DealModel>>((ref) async {
+  final repository = ref.read(dataRepositoryProvider);
+  return repository.getDeals();
+});
+
+
+final appliedDealsProvider = StateProvider<Set<String>>((ref) => {});
+
 final searchQueryProvider = StateProvider<String>((ref) => '');
 
 final selectedCategoryProvider = StateProvider<String?>((ref) => 'All');
+
+final selectedStoreProvider = StateProvider<StoreModel?>((ref) => null);
 
 final filteredStoresProvider = Provider<AsyncValue<List<StoreModel>>>((ref) {
   final storesAsync = ref.watch(storesProvider);

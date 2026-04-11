@@ -49,8 +49,9 @@ class _BannerCardState extends State<BannerCard> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 176, // h-44
+    return RepaintBoundary(
+      child: SizedBox(
+        height: 176, // h-44
 
       child: PageView.builder(
         controller: _pageController,
@@ -65,6 +66,7 @@ class _BannerCardState extends State<BannerCard> {
           if (index == 1) return _buildTechBanner();
           return _buildHomeBanner();
         },
+      ),
       ),
     );
   }

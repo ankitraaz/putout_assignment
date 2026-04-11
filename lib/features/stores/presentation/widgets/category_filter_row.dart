@@ -24,7 +24,7 @@ class CategoryFilterRow extends ConsumerWidget {
         return SizedBox(
           height: 36,
           child: ListView.separated(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 24),
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
             itemCount: allCategories.length,

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kuttot/core/constants/app_colors.dart';
 import 'package:kuttot/data/models/store_model.dart';
 import 'package:kuttot/core/constants/app_strings.dart';
+import 'package:kuttot/core/providers/app_providers.dart';
+import 'package:kuttot/features/shell/presentation/shell_screen.dart';
+import 'package:kuttot/features/stores/presentation/payment_screen.dart';
 
-class CuratedStoreCard extends StatelessWidget {
+class CuratedStoreCard extends ConsumerWidget {
   final StoreModel store;
 
   const CuratedStoreCard({
@@ -12,12 +16,17 @@ class CuratedStoreCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // Generate a mock distance just for the UI
     final mockDistance = ((store.name.length * 0.3) % 5 + 0.5).toStringAsFixed(1);
 
-    return RepaintBoundary(
-      child: Container(
+    return GestureDetector(
+      onTap: () {
+        ref.read(selectedStoreProvider.notifier).state = store;
+        ref.read(bottomNavIndexProvider.notifier).state = 3;
+      },
+      child: RepaintBoundary(
+        child: Container(
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -146,7 +155,14 @@ class CuratedStoreCard extends StatelessWidget {
                       child: SizedBox(
                         height: 28,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PaymentScreen(store: store),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.kutootRed,
                             foregroundColor: Colors.white,
@@ -187,6 +203,7 @@ class CuratedStoreCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
       ),
       ),
     );

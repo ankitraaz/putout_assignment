@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kuttot/core/constants/app_colors.dart';
 import 'package:kuttot/data/models/store_model.dart';
+import 'package:kuttot/features/stores/presentation/payment_screen.dart';
+import 'package:kuttot/core/providers/app_providers.dart';
+import 'package:kuttot/features/shell/presentation/shell_screen.dart';
 
-class StoreCard extends StatelessWidget {
+class StoreCard extends ConsumerWidget {
   final StoreModel store;
 
   const StoreCard({
@@ -11,14 +15,19 @@ class StoreCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final mockDistance =
         ((store.name.length * 0.3) % 5 + 0.5).toStringAsFixed(1);
 
-    return RepaintBoundary(
-      child: SizedBox(
-        width: 140,
-        height: 180,
+    return GestureDetector(
+      onTap: () {
+        ref.read(selectedStoreProvider.notifier).state = store;
+        ref.read(bottomNavIndexProvider.notifier).state = 3;
+      },
+      child: RepaintBoundary(
+        child: SizedBox(
+          width: 140,
+          height: 180,
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
@@ -178,7 +187,14 @@ class StoreCard extends StatelessWidget {
                               child: SizedBox(
                                 height: 28,
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => PaymentScreen(store: store),
+                                      ),
+                                    );
+                                  },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppColors.kutootRed,
                                     foregroundColor: Colors.white,
@@ -220,6 +236,7 @@ class StoreCard extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
             ),
           ),
         ),

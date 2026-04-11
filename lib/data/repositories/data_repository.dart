@@ -7,6 +7,7 @@ import 'package:kuttot/data/models/category_model.dart';
 import 'package:kuttot/data/models/reward_model.dart';
 import 'package:kuttot/data/models/store_model.dart';
 import 'package:kuttot/data/models/plan_model.dart';
+import 'package:kuttot/data/models/deal_model.dart';
 
 final dataRepositoryProvider = Provider<DataRepository>((ref) {
   return DataRepository();
@@ -92,5 +93,21 @@ class DataRepository {
     
     await box.put(cacheKey, data);
     return data.map((json) => PlanModel.fromJson(Map<String, dynamic>.from(json))).toList();
+  }
+
+  Future<List<DealModel>> getDeals() async {
+    final box = await _getCacheBox();
+    final String cacheKey = 'deals_data';
+
+    if (box.containsKey(cacheKey)) {
+      final cachedList = box.get(cacheKey) as List<dynamic>;
+      return cachedList.map((json) => DealModel.fromJson(Map<String, dynamic>.from(json))).toList();
+    }
+
+    final String response = await rootBundle.loadString('assets/data/deals.json');
+    final List<dynamic> data = await Isolate.run(() => _parseJsonData(response));
+    
+    await box.put(cacheKey, data);
+    return data.map((json) => DealModel.fromJson(Map<String, dynamic>.from(json))).toList();
   }
 }

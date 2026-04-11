@@ -3,8 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kuttot/core/constants/app_colors.dart';
 import 'package:kuttot/core/constants/app_strings.dart';
 import 'package:kuttot/core/providers/app_providers.dart';
-import 'package:kuttot/core/providers/location_provider.dart';
-import 'package:kuttot/features/home/presentation/widgets/location_search_sheet.dart';
+import 'package:kuttot/core/widgets/app_header.dart';
 import 'package:kuttot/core/widgets/custom_search_bar.dart';
 import 'package:kuttot/features/stores/presentation/widgets/category_filter_row.dart';
 import 'package:kuttot/features/stores/presentation/widgets/curated_store_card.dart';
@@ -20,9 +19,9 @@ class StoresScreen extends ConsumerWidget {
         child: Column(
           children: [
             // ── Header ──
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
-              child: _buildHeader(context, ref),
+            const Padding(
+              padding: EdgeInsets.only(top: 16),
+              child: AppHeader(),
             ),
             const SizedBox(height: 16),
 
@@ -111,100 +110,6 @@ class StoresScreen extends ConsumerWidget {
       },
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (err, stack) => Center(child: Text('Error: $err')),
-    );
-  }
-
-  // Duplicate header to match exactly without affecting HomeScreen structure
-  Widget _buildHeader(BuildContext context, WidgetRef ref) {
-    final locationAsync = ref.watch(locationProvider);
-    
-    return SizedBox(
-      height: 48,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          // Left: Location Pill
-          Align(
-            alignment: Alignment.centerLeft,
-            child: GestureDetector(
-              onTap: () {
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  backgroundColor: Colors.transparent,
-                  builder: (context) => const LocationSearchSheet(),
-                );
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFFF0E6),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.location_on, color: AppColors.locationOrange, size: 14),
-                    const SizedBox(width: 4),
-                    Text(
-                      locationAsync.when(
-                        data: (location) => location.length > 12 ? '${location.substring(0, 9)}...' : location,
-                        loading: () => 'LOCATING...',
-                        error: (_, __) => 'MUMBAI',
-                      ),
-                      style: const TextStyle(
-                        color: AppColors.locationOrange,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    const SizedBox(width: 2),
-                    const Icon(Icons.keyboard_arrow_down, color: AppColors.locationOrange, size: 16),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          
-          // Center: Logo Image
-          Image.asset(
-            'assets/images/kutoot_logo.png',
-            height: 32,
-            fit: BoxFit.contain,
-          ),
-
-          // Right: Upgrade Button
-          Align(
-            alignment: Alignment.centerRight,
-            child: Container(
-              height: 32,
-              decoration: BoxDecoration(
-                color: AppColors.kutootRed,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.kutootRed.withValues(alpha: 0.3),
-                    blurRadius: 8,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  shadowColor: Colors.transparent,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 14),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                  minimumSize: const Size(0, 32),
-                ),
-                child: const Text('UPGRADE', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w800, letterSpacing: 0.5)),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

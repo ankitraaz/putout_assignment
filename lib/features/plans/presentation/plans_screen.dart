@@ -1,13 +1,30 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kuttot/core/constants/app_colors.dart';
+import 'package:kuttot/data/models/store_model.dart';
+import 'package:kuttot/core/providers/app_providers.dart';
+import 'package:kuttot/core/widgets/app_header.dart';
+import 'package:kuttot/features/stores/presentation/payment_screen.dart';
 
 class PlansScreen extends ConsumerWidget {
   const PlansScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    StoreModel? currentStore = ref.watch(selectedStoreProvider);
+    
+    if (currentStore == null) {
+      final fallbackStoresAsync = ref.watch(storesProvider);
+      final fallbackList = fallbackStoresAsync.valueOrNull;
+      if (fallbackList != null && fallbackList.isNotEmpty) {
+        currentStore = fallbackList.first;
+      }
+    }
+
+    if (currentStore == null) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFF8F5), // surface
       body: Stack(
@@ -15,13 +32,15 @@ class PlansScreen extends ConsumerWidget {
           CustomScrollView(
             physics: const BouncingScrollPhysics(),
             slivers: [
-              const SliverToBoxAdapter(child: SizedBox(height: 80)), // Header spacer
+              SliverToBoxAdapter(
+                child: SizedBox(height: MediaQuery.paddingOf(context).top + 64 + 32),
+              ), // Dynamic Header spacer
               
               // Hero Section
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 sliver: SliverToBoxAdapter(
-                  child: _HeroSection(),
+                  child: _HeroSection(store: currentStore),
                 ),
               ),
 
@@ -29,7 +48,7 @@ class PlansScreen extends ConsumerWidget {
               SliverPadding(
                 padding: const EdgeInsets.fromLTRB(24, 32, 24, 0),
                 sliver: SliverToBoxAdapter(
-                  child: _PrimaryActions(),
+                  child: _PrimaryActions(store: currentStore),
                 ),
               ),
 
@@ -37,20 +56,35 @@ class PlansScreen extends ConsumerWidget {
               SliverPadding(
                 padding: const EdgeInsets.only(top: 48, bottom: 120),
                 sliver: SliverToBoxAdapter(
-                  child: _DealsMatrix(),
+                  child: _DealsMatrix(store: currentStore),
                 ),
               ),
             ],
           ),
 
           // Custom Header (Fixed)
-          const _BrandHeader(),
+          const Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: AppHeader(),
+          ),
         ],
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 90), // Offset for floating bottom nav
         child: FloatingActionButton(
-          onPressed: () {},
+          heroTag: null,
+          onPressed: () {
+            if (currentStore != null) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PaymentScreen(store: currentStore!),
+                ),
+              );
+            }
+          },
           backgroundColor: const Color(0xFFAE1E3F),
           shape: const CircleBorder(
             side: BorderSide(color: Colors.white24, width: 2),
@@ -63,104 +97,20 @@ class PlansScreen extends ConsumerWidget {
   }
 }
 
-class _BrandHeader extends StatelessWidget {
-  const _BrandHeader();
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      top: 0,
-      left: 0,
-      right: 0,
-      child: ClipRRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
-          child: Container(
-            height: 64,
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.9),
-            ),
-            child: SafeArea(
-              bottom: false,
-              child: Row(
-                children: [
-                  // Location Badge
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFEA6B1E).withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: const Color(0xFFEA6B1E).withValues(alpha: 0.2)),
-                    ),
-                    child: const Row(
-                      children: [
-                        Icon(Icons.location_on, size: 16, color: Color(0xFFEA6B1E)),
-                        SizedBox(width: 4),
-                        Text(
-                          'MUMBAI ▾',
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w900,
-                            color: Color(0xFFEA6B1E),
-                            letterSpacing: -0.5,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Spacer(),
-                  // Logo
-                  Image.asset(
-                    'assets/images/kutoot_logo.png',
-                    height: 48,
-                    fit: BoxFit.contain,
-                  ),
-                  const Spacer(),
-                  // Upgrade Button
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFAE1E3F),
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xFFAE1E3F).withValues(alpha: 0.2),
-                          blurRadius: 20,
-                          offset: const Offset(0, 8),
-                        ),
-                      ],
-                    ),
-                    child: const Text(
-                      'UPGRADE',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 1.0,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _HeroSection extends StatelessWidget {
+  final StoreModel store;
+  
+  const _HeroSection({required this.store});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 420,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
-        image: const DecorationImage(
+        image: DecorationImage(
           image: NetworkImage(
-            'https://lh3.googleusercontent.com/aida-public/AB6AXuB29M1JbLS0G8L5cGhU0cIW8O-IrmW8-j_GWHl6jZBCAiVok4uzDgaVG64yH5wC-qaBz0N5IFXaj9UcPqkiMefkvlGrisxE4Qc08m18ccl9g40ZDEomDTVa1s6gfRoH_Ef8HMxUWR0dmFFd7zcQJ8l20BtTINi6pDOynvPFzti9rhX97J6s2kphanNmSIOkhHSaANBbLvDR6SCArnFfo3PuMkZPxGlzgt183k0S0_ps-vpFJpccLg-8NXXWMzlZReV-1pVh116O_yTu',
+            store.imageUrl,
           ),
           fit: BoxFit.cover,
         ),
@@ -180,7 +130,6 @@ class _HeroSection extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.7),
                     borderRadius: BorderRadius.circular(24),
-                    border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
                   ),
                   child: Row(
                     children: [
@@ -219,9 +168,8 @@ class _HeroSection extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.7),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: Colors.white.withValues(alpha: 0.4)),
+                    color: Colors.white.withValues(alpha: 0.85),
+                    borderRadius: BorderRadius.circular(24),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -229,9 +177,9 @@ class _HeroSection extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            'Westside',
-                            style: TextStyle(
+                          Text(
+                            store.name,
+                            style: const TextStyle(
                               fontSize: 32,
                               fontWeight: FontWeight.w900,
                               color: Color(0xFF221A14),
@@ -242,15 +190,15 @@ class _HeroSection extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
                               color: const Color(0xFFFFE080),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(24),
                             ),
-                            child: const Row(
+                            child: Row(
                               children: [
                                 Icon(Icons.star, size: 16, color: Color(0xFF231B00)),
                                 SizedBox(width: 4),
                                 Text(
-                                  '4.8',
-                                  style: TextStyle(
+                                  store.rating.toString(),
+                                  style: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
                                     color: Color(0xFF231B00),
@@ -261,9 +209,9 @@ class _HeroSection extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const Text(
-                        'Premium Lifestyle & Global Fashion • MG Road, Bangalore',
-                        style: TextStyle(
+                      Text(
+                        '${store.category} • ${store.address}',
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: Color(0xFF594042),
@@ -312,6 +260,9 @@ class _HeroSection extends StatelessWidget {
 }
 
 class _PrimaryActions extends StatelessWidget {
+  final StoreModel store;
+  const _PrimaryActions({required this.store});
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -334,12 +285,21 @@ class _PrimaryActions extends StatelessWidget {
             ),
             textColor: Colors.white,
             hasShadow: true,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PaymentScreen(store: store),
+                ),
+              );
+            },
           ),
         ),
       ],
     );
   }
 }
+
 
 class _ActionButton extends StatelessWidget {
   final String label;
@@ -348,6 +308,7 @@ class _ActionButton extends StatelessWidget {
   final Gradient? gradient;
   final Color textColor;
   final bool hasShadow;
+  final VoidCallback? onTap;
 
   const _ActionButton({
     required this.label,
@@ -356,11 +317,17 @@ class _ActionButton extends StatelessWidget {
     this.gradient,
     required this.textColor,
     this.hasShadow = false,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(28),
+        child: Container(
       height: 56,
       decoration: BoxDecoration(
         color: color,
@@ -393,14 +360,33 @@ class _ActionButton extends StatelessWidget {
           ],
         ),
       ),
+      ),
+      ),
     );
   }
 }
 
-class _DealsMatrix extends StatelessWidget {
+class _DealsMatrix extends ConsumerWidget {
+  final StoreModel store;
+  
+  const _DealsMatrix({required this.store});
+
   @override
-  Widget build(BuildContext context) {
-    return Column(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final dealsAsync = ref.watch(dealsProvider);
+
+    return dealsAsync.when(
+      data: (deals) {
+        final activeDeals = deals.where((d) => 
+          d.category == 'Bank Offers' || d.title.toLowerCase().contains(store.name.toLowerCase())
+        ).take(4).toList();
+
+        if (activeDeals.isEmpty) return const SizedBox.shrink();
+
+        final group1 = activeDeals.take(2).toList();
+        final group2 = activeDeals.skip(2).take(2).toList();
+
+        return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
@@ -450,57 +436,31 @@ class _DealsMatrix extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 24),
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
-            itemCount: 2, // 2 groups of 2 columns
+            itemCount: group2.isNotEmpty ? 2 : 1,
             separatorBuilder: (context, index) => const SizedBox(width: 16),
             itemBuilder: (context, index) {
-              if (index == 0) {
-                return _DealsGroup(
-                  cards: [
-                    _CouponCard(
-                      title: '60% OFF',
-                      subtitle: 'Premium apparel collections',
-                      badge: 'Merchant Special',
-                      badgeColor: const Color(0xFFAE1E3F),
-                      tag: 'Elite',
-                      code: 'WST60',
-                    ),
-                    _CouponCard(
-                      title: '₹500 CB',
-                      subtitle: 'Spends above ₹3,000 only',
-                      badge: 'Flash Deal',
-                      badgeColor: const Color(0xFFEA6B1E),
-                      tag: 'Hot',
-                      code: 'CASHBACK500',
-                      isSecondaryAction: true,
-                    ),
-                  ],
-                );
-              } else {
-                return _DealsGroup(
-                  cards: [
-                    _CouponCard(
-                      title: '15% OFF',
-                      subtitle: 'HDFC Card users exclusive',
-                      badge: 'Bank Offer',
-                      badgeColor: const Color(0xFF725C00),
-                      code: 'Auto Applied',
-                      isSecondaryAction: true,
-                    ),
-                    _CouponCard(
-                      title: 'BOGO',
-                      subtitle: 'On latest select footwear',
-                      badge: 'New User',
-                      badgeColor: const Color(0xFFAE1E3F),
-                      tag: 'Select',
-                      code: 'WESTBOGO',
-                    ),
-                  ],
-                );
-              }
+              final groupDeals = index == 0 ? group1 : group2;
+              return _DealsGroup(
+                cards: groupDeals.map((deal) {
+                  return _CouponCard(
+                    title: deal.highlightText,
+                    subtitle: deal.title,
+                    badge: deal.category == 'Bank Offers' ? 'Bank Offer' : 'Merchant Special',
+                    badgeColor: deal.category == 'Bank Offers' ? const Color(0xFF725C00) : const Color(0xFFAE1E3F),
+                    tag: deal.category == 'Bank Offers' ? '' : 'Elite',
+                    code: deal.id,
+                    isSecondaryAction: deal.category == 'Bank Offers',
+                  );
+                }).toList(),
+              );
             },
           ),
         ),
       ],
+    );
+      },
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (e, st) => const SizedBox.shrink(),
     );
   }
 }
@@ -524,7 +484,7 @@ class _DealsGroup extends StatelessWidget {
   }
 }
 
-class _CouponCard extends StatelessWidget {
+class _CouponCard extends ConsumerWidget {
   final String title;
   final String subtitle;
   final String badge;
@@ -544,7 +504,10 @@ class _CouponCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appliedDeals = ref.watch(appliedDealsProvider);
+    final isApplied = appliedDeals.contains(code);
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -573,7 +536,6 @@ class _CouponCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: badgeColor.withValues(alpha: 0.05),
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: badgeColor.withValues(alpha: 0.1)),
                       ),
                       child: Text(
                         badge.toUpperCase(),
@@ -652,18 +614,44 @@ class _CouponCard extends StatelessWidget {
                         letterSpacing: 0.5,
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: isSecondaryAction ? const Color(0xFF221A14) : const Color(0xFFAE1E3F),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
                         borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Text(
-                        'APPLY',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold,
+                        onTap: () {
+                          ref.read(appliedDealsProvider.notifier).update((state) {
+                            if (state.contains(code)) {
+                              return state.difference({code});
+                            } else {
+                              return {...state, code};
+                            }
+                          });
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: isApplied
+                                ? Colors.green.withValues(alpha: 0.1)
+                                : (isSecondaryAction ? const Color(0xFF221A14) : const Color(0xFFAE1E3F)),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (isApplied) ...[
+                                const Icon(Icons.check_circle, color: Colors.green, size: 12),
+                                const SizedBox(width: 4),
+                              ],
+                              Text(
+                                isApplied ? 'APPLIED' : 'APPLY',
+                                style: TextStyle(
+                                  color: isApplied ? Colors.green : Colors.white,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -712,18 +700,36 @@ class _Cutout extends StatelessWidget {
   }
 }
 
+class DashedLinePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.black12
+      ..strokeWidth = 1
+      ..style = PaintingStyle.stroke;
+
+    double startX = 0;
+    final double dashWidth = 8;
+    final double dashSpace = 4;
+    while (startX < size.width) {
+      canvas.drawLine(Offset(startX, 0), Offset(startX + dashWidth, 0), paint);
+      startX += dashWidth + dashSpace;
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant DashedLinePainter oldDelegate) => false;
+}
+
 class _DashedLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: List.generate(
-        30,
-        (index) => Expanded(
-          child: Container(
-            height: 1,
-            margin: const EdgeInsets.symmetric(horizontal: 1),
-            color: Colors.black12,
-          ),
+    return RepaintBoundary(
+      child: SizedBox(
+        height: 1,
+        width: double.infinity,
+        child: CustomPaint(
+          painter: DashedLinePainter(),
         ),
       ),
     );
