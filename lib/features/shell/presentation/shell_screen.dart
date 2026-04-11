@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kuttot/core/constants/app_colors.dart';
@@ -25,10 +26,7 @@ class ShellScreen extends ConsumerWidget {
     ];
 
     return Scaffold(
-      body: IndexedStack(
-        index: currentIndex,
-        children: screens,
-      ),
+      body: IndexedStack(index: currentIndex, children: screens),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: AppColors.kutootRed,
@@ -37,49 +35,90 @@ class ShellScreen extends ConsumerWidget {
         child: const Icon(Icons.qr_code_scanner, color: Colors.white, size: 28),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      extendBody: true,
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: AppColors.shadow,
-              blurRadius: 20,
-              offset: Offset(0, -5),
+              color: Color.fromRGBO(59, 50, 43, 0.08),
+              blurRadius: 24,
+              offset: Offset(0, -4),
             ),
           ],
         ),
         child: ClipRRect(
           borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
-          child: BottomNavigationBar(
-            currentIndex: currentIndex,
-            onTap: (index) => ref.read(bottomNavIndexProvider.notifier).state = index,
-            selectedItemColor: AppColors.kutootRed,
-            unselectedItemColor: AppColors.textLight,
-            showUnselectedLabels: true,
-            type: BottomNavigationBarType.fixed,
-            selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w800, fontSize: 10, letterSpacing: 0.5),
-            unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w800, fontSize: 10, letterSpacing: 0.5),
-            items: const [
-              BottomNavigationBarItem(
-                icon: Padding(padding: EdgeInsets.only(bottom: 4), child: Icon(Icons.home_filled, size: 24)),
-                label: 'HOME',
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 16.0, sigmaY: 16.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.85),
+                border: const Border(
+                  top: BorderSide(
+                    color: Color(0x1AFFDADB),
+                    width: 2,
+                  ),
+                ),
               ),
-              BottomNavigationBarItem(
-                icon: Padding(padding: EdgeInsets.only(bottom: 4), child: Icon(Icons.local_offer, size: 22)),
-                label: 'REWARDS',
+              child: BottomNavigationBar(
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+                currentIndex: currentIndex,
+                onTap: (index) =>
+                    ref.read(bottomNavIndexProvider.notifier).state = index,
+                selectedItemColor: AppColors.kutootRed,
+                unselectedItemColor: AppColors.textLight,
+                showUnselectedLabels: true,
+                type: BottomNavigationBarType.fixed,
+                selectedLabelStyle: const TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 10,
+                  letterSpacing: 0.5,
+                ),
+                unselectedLabelStyle: const TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 10,
+                  letterSpacing: 0.5,
+                ),
+                items: const [
+                  BottomNavigationBarItem(
+                    icon: Padding(
+                      padding: EdgeInsets.only(bottom: 4),
+                      child: Icon(Icons.home_filled, size: 24),
+                    ),
+                    label: 'HOME',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Padding(
+                      padding: EdgeInsets.only(bottom: 4),
+                      child: Icon(Icons.local_offer, size: 22),
+                    ),
+                    label: 'REWARDS',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Padding(
+                      padding: EdgeInsets.only(bottom: 4),
+                      child: Icon(Icons.store, size: 22),
+                    ),
+                    label: 'STORES',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Padding(
+                      padding: EdgeInsets.only(bottom: 4),
+                      child: Icon(Icons.receipt_long, size: 22),
+                    ),
+                    label: 'PLANS',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Padding(
+                      padding: EdgeInsets.only(bottom: 4),
+                      child: Icon(Icons.person, size: 24),
+                    ),
+                    label: 'ACCOUNT',
+                  ),
+                ],
               ),
-              BottomNavigationBarItem(
-                icon: Padding(padding: EdgeInsets.only(bottom: 4), child: Icon(Icons.store, size: 22)),
-                label: 'STORES',
-              ),
-              BottomNavigationBarItem(
-                icon: Padding(padding: EdgeInsets.only(bottom: 4), child: Icon(Icons.receipt_long, size: 22)),
-                label: 'PLANS',
-              ),
-              BottomNavigationBarItem(
-                icon: Padding(padding: EdgeInsets.only(bottom: 4), child: Icon(Icons.person, size: 24)),
-                label: 'ACCOUNT',
-              ),
-            ],
+            ),
           ),
         ),
       ),

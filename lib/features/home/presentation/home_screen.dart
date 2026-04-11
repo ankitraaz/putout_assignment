@@ -3,11 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kuttot/core/constants/app_colors.dart';
 import 'package:kuttot/core/constants/app_strings.dart';
 import 'package:kuttot/core/providers/app_providers.dart';
+import 'package:kuttot/core/providers/location_provider.dart';
 import 'package:kuttot/core/widgets/custom_search_bar.dart';
 import 'package:kuttot/features/home/presentation/widgets/banner_card.dart';
 import 'package:kuttot/features/home/presentation/widgets/category_row.dart';
 import 'package:kuttot/features/home/presentation/widgets/section_header.dart';
 import 'package:kuttot/features/home/presentation/widgets/store_card.dart';
+import 'package:kuttot/features/home/presentation/widgets/location_search_sheet.dart';
 import 'package:kuttot/features/shell/presentation/shell_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -25,15 +27,16 @@ class HomeScreen extends ConsumerWidget {
             children: [
               // ── Header ──
               Padding(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                padding: const EdgeInsets.only(top: 16),
                 child: _buildHeader(context, ref),
               ),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: 16), // mt-4 for search
+
 
               // ── Search ──
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 20), // px-5
                 child: CustomSearchBar(
                   hintText: AppStrings.searchHint,
                   onChanged: (value) {
@@ -42,20 +45,21 @@ class HomeScreen extends ConsumerWidget {
                 ),
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 24), // mt-6
 
               // ── Banner ──
               const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.symmetric(horizontal: 20), // px-5
                 child: BannerCard(),
               ),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 32), // mt-8
+
 
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 20), // px-5
                   child: Text(
                     'DISCOVER CATEGORIES',
                     style: TextStyle(
@@ -70,11 +74,11 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox(height: 12),
               const CategoryRow(),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 32), // mt-8
 
               // ── Nearby Stores ──
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: SectionHeader(
                   title: AppStrings.nearbyStores,
                   onSeeAll: () {
@@ -85,11 +89,11 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox(height: 12),
               _buildNearbyStores(ref, context),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 32), // mt-8
 
               // ── Weekly Rewards preview ──
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: SectionHeader(
                   title: AppStrings.weeklyRewards,
                   onSeeAll: () {
@@ -100,7 +104,8 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox(height: 12),
               _buildRewardsPreview(ref, context),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 32), // mt-8
+
             ],
           ),
         ),
@@ -112,108 +117,121 @@ class HomeScreen extends ConsumerWidget {
   //  Header row: location + upgrade button
   // ─────────────────────────────────────────────────────────────
   Widget _buildHeader(BuildContext context, WidgetRef ref) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        // Location Pill
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-          decoration: BoxDecoration(
-            color: const Color(0xFFFFF0E6), // Light orange background
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(
-                Icons.location_on,
-                color: AppColors.locationOrange,
-                size: 14,
-              ),
-              const SizedBox(width: 4),
-              const Text(
-                'MUMBAI',
-                style: TextStyle(
-                  color: AppColors.locationOrange,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w800,
+    final locationAsync = ref.watch(locationProvider);
+
+    return Container(
+      height: 64, // h-16
+      padding: const EdgeInsets.symmetric(horizontal: 24), // px-6
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.9),
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // Left: Location Pill
+          Align(
+            alignment: Alignment.centerLeft,
+            child: GestureDetector(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) => const LocationSearchSheet(),
+                );
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFF0E6), // Light orange background
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.location_on,
+                      color: AppColors.locationOrange,
+                      size: 14,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      locationAsync.when(
+                        data: (location) => location.length > 12
+                            ? '${location.substring(0, 9)}...'
+                            : location,
+                        loading: () => 'LOCATING...',
+                        error: (_, __) => 'MUMBAI',
+                      ),
+                      style: const TextStyle(
+                        color: AppColors.locationOrange,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    const SizedBox(width: 2),
+                    const Icon(
+                      Icons.keyboard_arrow_down,
+                      color: AppColors.locationOrange,
+                      size: 16,
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(width: 2),
-              const Icon(
-                Icons.keyboard_arrow_down,
-                color: AppColors.locationOrange,
-                size: 16,
-              ),
-            ],
-          ),
-        ),
-
-        // Logo Text (Centered)
-        RichText(
-          text: const TextSpan(
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w900,
-              letterSpacing: -0.5,
             ),
-            children: [
-              TextSpan(
-                text: 'KUT',
-                style: TextStyle(color: AppColors.kutootMaroon),
-              ),
-              TextSpan(
-                text: 'OO',
-                style: TextStyle(color: AppColors.locationOrange),
-              ),
-              TextSpan(
-                text: 'T',
-                style: TextStyle(color: AppColors.kutootMaroon),
-              ),
-            ],
           ),
-        ),
 
-        // Upgrade Button
-        Container(
-          height: 32,
-          decoration: BoxDecoration(
-            color: AppColors.kutootRed,
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.kutootRed.withValues(alpha: 0.3),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              ),
-            ],
+          // Center: Logo Image
+          Image.asset(
+            'assets/images/kutoot_logo.png',
+            height: 48, // Adjusted per Kinetic spec (3.04rem)
+            fit: BoxFit.contain,
           ),
-          child: ElevatedButton(
-            onPressed: () {
-              ref.read(bottomNavIndexProvider.notifier).state = 3; // Index 3 is Plans
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.transparent,
-              shadowColor: Colors.transparent,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 14),
-              shape: RoundedRectangleBorder(
+
+          // Right: Upgrade Button
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              height: 32,
+              decoration: BoxDecoration(
+                color: AppColors.kutootRed,
                 borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.kutootRed.withValues(alpha: 0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
-              minimumSize: const Size(0, 32),
-            ),
-            child: const Text(
-              'UPGRADE',
-              style: TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 0.5,
+              child: ElevatedButton(
+                onPressed: () {
+                  ref.read(bottomNavIndexProvider.notifier).state =
+                      3; // Index 3 is Plans
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  minimumSize: const Size(0, 32),
+                ),
+                child: const Text(
+                  'UPGRADE',
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 0.5,
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -240,37 +258,38 @@ class HomeScreen extends ConsumerWidget {
           children: [
             // Row 1
             SizedBox(
-              height: 200,
+              height: 180,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.only(left: 16, right: 8),
+                padding: const EdgeInsets.only(left: 20, right: 8),
                 itemCount: row1.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.only(right: 14),
+                    padding: const EdgeInsets.only(right: 12),
                     child: StoreCard(store: row1[index]),
                   );
                 },
               ),
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 12),
             // Row 2
             SizedBox(
-              height: 200,
+              height: 180,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.only(left: 16, right: 8),
+                padding: const EdgeInsets.only(left: 20, right: 8),
                 itemCount: row2.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.only(right: 14),
+                    padding: const EdgeInsets.only(right: 12),
                     child: StoreCard(store: row2[index]),
                   );
                 },
               ),
             ),
+
           ],
         );
       },
@@ -292,22 +311,26 @@ class HomeScreen extends ConsumerWidget {
     return rewardsAsync.when(
       data: (rewards) {
         return SizedBox(
-          height: 360,
+          height: 320,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.only(left: 16, right: 8),
+            padding: const EdgeInsets.only(left: 20, right: 8),
+
             itemCount: rewards.length,
             itemBuilder: (context, index) {
               final reward = rewards[index];
               return Container(
-                width: 280,
+                width: 240,
+
                 margin: const EdgeInsets.only(right: 14),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(32),
                   boxShadow: [
                     BoxShadow(
-                      color: _getColorFromHex(reward.gradientColors[0]).withValues(alpha: 0.3),
+                      color: _getColorFromHex(
+                        reward.gradientColors[0],
+                      ).withValues(alpha: 0.3),
                       blurRadius: 12,
                       offset: const Offset(0, 6),
                     ),
@@ -327,7 +350,7 @@ class HomeScreen extends ConsumerWidget {
                           color: _getColorFromHex(reward.gradientColors[0]),
                         ),
                       ),
-                      
+
                       // Gradient overlay
                       Positioned(
                         bottom: 0,
@@ -339,7 +362,9 @@ class HomeScreen extends ConsumerWidget {
                             gradient: LinearGradient(
                               colors: [
                                 Colors.transparent,
-                                _getColorFromHex(reward.gradientColors[0]).withValues(alpha: 0.8),
+                                _getColorFromHex(
+                                  reward.gradientColors[0],
+                                ).withValues(alpha: 0.8),
                                 _getColorFromHex(reward.gradientColors[0]),
                               ],
                               begin: Alignment.topCenter,
@@ -355,7 +380,10 @@ class HomeScreen extends ConsumerWidget {
                         top: 16,
                         left: 16,
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20),
@@ -364,8 +392,10 @@ class HomeScreen extends ConsumerWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Icon(
-                                index % 2 == 0 ? Icons.stars : Icons.check_circle, 
-                                color: AppColors.kutootRed, 
+                                index % 2 == 0
+                                    ? Icons.stars
+                                    : Icons.check_circle,
+                                color: AppColors.kutootRed,
                                 size: 10,
                               ),
                               const SizedBox(width: 4),
@@ -381,7 +411,7 @@ class HomeScreen extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      
+
                       // Bottom Content
                       Positioned(
                         bottom: 16,
@@ -411,19 +441,24 @@ class HomeScreen extends ConsumerWidget {
                               ),
                             ),
                             const SizedBox(height: 12),
-                            
+
                             // Mock dashed progress bar + percentage text
                             Row(
                               children: [
                                 Expanded(
                                   child: Row(
                                     children: List.generate(8, (i) {
-                                      final isFilled = i < (reward.progress * 8).round();
+                                      final isFilled =
+                                          i < (reward.progress * 8).round();
                                       return Expanded(
                                         child: Container(
-                                          margin: const EdgeInsets.only(right: 2),
+                                          margin: const EdgeInsets.only(
+                                            right: 2,
+                                          ),
                                           height: 3,
-                                          color: isFilled ? Colors.white : Colors.white24,
+                                          color: isFilled
+                                              ? Colors.white
+                                              : Colors.white24,
                                         ),
                                       );
                                     }).toList(),

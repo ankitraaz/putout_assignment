@@ -44,11 +44,13 @@ class CategoryRow extends ConsumerWidget {
     return categoriesAsync.when(
       data: (categories) {
         return SizedBox(
-          height: 100,
+          height: 110,
+
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+
             itemCount: categories.length + 1, // +1 for "ALL"
             itemBuilder: (context, index) {
               if (index == 0) {
@@ -58,17 +60,19 @@ class CategoryRow extends ConsumerWidget {
                   child: Column(
                     children: [
                       Container(
-                        height: 60,
-                        width: 60,
+                        height: 64,
+                        width: 64,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(16),
                           color: AppColors.primary.withValues(alpha: 0.1),
                         ),
+
                         child: const Center(
                           child: Icon(
                             Icons.grid_view_rounded,
-                            color: Color(0xFFBE1E48), // Matching the red theme
+                            color: AppColors.primary,
                             size: 28,
+
                           ),
                         ),
                       ),
@@ -77,9 +81,10 @@ class CategoryRow extends ConsumerWidget {
                         'ALL',
                         style: TextStyle(
                           fontSize: 10,
-                          fontWeight: FontWeight.w800,
-                          color: Color(0xFFBE1E48),
+                          fontWeight: FontWeight.w900,
+                          color: AppColors.primary,
                         ),
+
                       ),
                     ],
                   ),
@@ -97,27 +102,25 @@ class CategoryRow extends ConsumerWidget {
                 child: Column(
                   children: [
                     Container(
-                      height: 60,
-                      width: 60,
+                      height: 64,
+                      width: 64,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: bgColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: bgColor.withValues(alpha: 0.3),
-                            blurRadius: 8,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
+                        borderRadius: BorderRadius.circular(16),
+                        color: bgColor.withValues(alpha: 0.1),
+                        border: Border.all(
+                          color: bgColor.withValues(alpha: 0.2),
+                          width: 1,
+                        ),
                       ),
                       child: Center(
                         child: category.icon == 'checkroom'
-                            ? const Text('👕', style: TextStyle(fontSize: 26))
+                            ? const Text('👕', style: TextStyle(fontSize: 28))
                             : Icon(
                                 _getIconData(category.icon),
-                                color: Colors.white,
+                                color: bgColor,
                                 size: 28,
                               ),
+
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -125,9 +128,10 @@ class CategoryRow extends ConsumerWidget {
                       category.name.toUpperCase(),
                       style: const TextStyle(
                         fontSize: 10,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w900,
                         color: AppColors.textPrimary,
-                        letterSpacing: 0.5,
+                        letterSpacing: 0,
+
                       ),
                     ),
                   ],

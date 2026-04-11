@@ -19,7 +19,7 @@ class SectionHeader extends StatelessWidget {
           title,
           style: const TextStyle(
             fontSize: 18,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w900,
             color: AppColors.textPrimary,
           ),
         ),
@@ -33,16 +33,16 @@ class SectionHeader extends StatelessWidget {
                   'SEE ALL',
                   style: TextStyle(
                     fontSize: 11,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.bold,
                     letterSpacing: 0.5,
-                    color: AppColors.kutootRed,
+                    color: AppColors.primary,
                   ),
                 ),
                 const SizedBox(width: 4),
                 const Icon(
                   Icons.play_arrow,
                   size: 14,
-                  color: AppColors.kutootRed,
+                  color: AppColors.primary,
                 ),
               ],
             ),
