@@ -27,6 +27,15 @@ I constructed this system entirely focused on **enterprise-grade performance**, 
 
 ---
 
+## 📺 Full Application Walkthrough
+> [!TIP]
+> **Check out the 3v-minute demo video below** to see all 23 screens in action, including smooth transitions, location discovery, and the premium subscription flow.
+
+<!-- [REPLACE THIS LINE WITH YOUR VIDEO LINK] -->
+<!-- Example: ![Kutoot Walkthrough](https://user-images.githubusercontent.com/.../video.mp4) -->
+
+---
+
 ## Premium Enhancements & Screens
 
 The app leverages **7 core functional layouts** connected through a hybridized IndexedStack bottom navigation and distinct modal push routes:
