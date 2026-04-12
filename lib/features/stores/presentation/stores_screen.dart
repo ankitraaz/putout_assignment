@@ -16,6 +16,7 @@ class StoresScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBg,
       body: SafeArea(
+        bottom: false,
         child: Column(
           children: [
             // ── Header ──

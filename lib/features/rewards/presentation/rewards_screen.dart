@@ -199,6 +199,7 @@ class _RewardsScreenState extends ConsumerState<RewardsScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFFBF8F6),
       body: SafeArea(
+        bottom: false,
         child: Column(
           children: [
             // ── Header ──

@@ -26,6 +26,7 @@ class HomeScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBg,
       body: SafeArea(
+        bottom: false,
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -117,6 +118,7 @@ class HomeScreen extends ConsumerWidget {
               _buildRewardsPreview(ref, context),
 
               const SizedBox(height: 32), // mt-8
+              const SizedBox(height: 100), // Bottom spacer for floating nav
 
             ],
           ),
