@@ -13,6 +13,7 @@ import 'package:kuttot/core/widgets/app_header.dart';
 import 'package:kuttot/features/profile/presentation/delete_account_screen.dart';
 import 'package:kuttot/features/profile/presentation/logout_confirmation_screen.dart';
 import 'package:kuttot/features/profile/presentation/edit_profile_screen.dart';
+import 'package:kuttot/features/support/presentation/support_screen.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -907,7 +908,12 @@ class ProfileScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 20),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SupportScreen()),
+                  );
+                },
                 child: Container(
                   width: double.infinity,
                   height: 52,

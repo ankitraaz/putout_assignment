@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:kuttot/core/constants/app_colors.dart';
 import 'package:kuttot/core/providers/app_providers.dart';
@@ -839,7 +840,7 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
         ),
         const SizedBox(height: 16),
         SizedBox(
-          height: 190,
+          height: 130, // Reduced height for rectangular look
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: activeDeals.length,
@@ -862,25 +863,18 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
                 },
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
-                  width: 288, // w-72 equivalent
-                  padding: const EdgeInsets.all(20),
+                  width: 280, // Widen for a rectangular proportion
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24), // rounded-3xl
-                    color: isApplied ? const Color(0xFF981E32) : Colors.white,
-                    border: isApplied ? null : Border.all(color: const Color(0xFFE1BEC0), width: 1.5), // Custom secondary border
+                    borderRadius: BorderRadius.circular(20), // smooth round corners
+                    color: isApplied ? const Color(0xFF981E32) : AppColors.surfaceContainer, // Vibrant surface beige matching image 1
                     boxShadow: [
                       if (isApplied)
                         BoxShadow(
                           color: const Color(0xFF981E32).withValues(alpha: 0.3),
-                          blurRadius: 20,
-                          offset: const Offset(0, 10),
-                        )
-                      else
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.05),
                           blurRadius: 15,
                           offset: const Offset(0, 8),
-                        ),
+                        )
                     ],
                   ),
                   child: Stack(
@@ -889,11 +883,11 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
                       // Decorative Blur circle for APPLIED state
                       if (isApplied)
                         Positioned(
-                          right: -32,
-                          top: -32,
+                          right: -20,
+                          top: -20,
                           child: Container(
-                            width: 128,
-                            height: 128,
+                            width: 100,
+                            height: 100,
                             decoration: BoxDecoration(
                               color: Colors.white.withValues(alpha: 0.1),
                               shape: BoxShape.circle,
@@ -910,90 +904,78 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      isApplied ? 'PROMO CODE' : deal.validityText.toUpperCase(),
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold,
-                                        letterSpacing: 2.0,
-                                        color: isApplied ? Colors.white.withValues(alpha: 0.7) : AppColors.textSecondary,
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      deal.id, // "WESTSIDE20" or "FESTIVE500"
-                                      style: TextStyle(
-                                        fontSize: 24, // text-2xl
-                                        fontWeight: FontWeight.w900, // font-black
-                                        letterSpacing: -0.5,
-                                        color: isApplied ? Colors.white : AppColors.textPrimary,
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ],
+                                child: Text(
+                                  isApplied ? 'PROMO CODE' : deal.validityText.toUpperCase(),
+                                  style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 1.5,
+                                    color: isApplied ? Colors.white.withValues(alpha: 0.7) : const Color(0xFF594042),
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
+                              const SizedBox(width: 8),
                               if (isApplied)
                                 Container(
-                                  width: 32,
-                                  height: 32,
+                                  width: 24,
+                                  height: 24,
                                   decoration: BoxDecoration(
                                     color: Colors.white.withValues(alpha: 0.2),
                                     shape: BoxShape.circle,
                                   ),
-                                  child: const Icon(Icons.close, size: 16, color: Colors.white),
+                                  child: const Icon(Icons.close, size: 14, color: Colors.white),
                                 )
                               else
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.kutootRed.withValues(alpha: 0.1),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: const Text(
-                                    'APPLY',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1.0,
-                                      color: AppColors.kutootRed,
-                                    ),
+                                Text(
+                                  'APPLY',
+                                  style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w900,
+                                    letterSpacing: 0.5,
+                                    color: AppColors.kutootMaroon,
                                   ),
                                 ),
                             ],
                           ),
+                          Text(
+                            deal.id, // e.g. "FESTIVE500"
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w900,
+                              letterSpacing: -0.5,
+                              color: isApplied ? Colors.white : const Color(0xFFB34A00), // Vibrant rust orange
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                           if (isApplied)
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                               decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(12),
                               ),
                               child: Text(
                                 '${deal.highlightText} APPLIED'.toUpperCase(), // "20% FLAT OFF APPLIED"
-                                style: const TextStyle(
-                                  fontSize: 10,
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 9,
                                   fontWeight: FontWeight.w900,
-                                  letterSpacing: 1.5,
-                                  color: Color(0xFF981E32),
+                                  letterSpacing: 1.0,
+                                  color: const Color(0xFF981E32),
                                 ),
                               ),
                             )
                           else
                             Text(
                               '${deal.highlightText} on ${deal.title}',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.textSecondary.withValues(alpha: 0.9),
+                              style: GoogleFonts.plusJakartaSans(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF594042).withValues(alpha: 0.9),
                               ),
-                              maxLines: 2,
+                              maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                         ],
