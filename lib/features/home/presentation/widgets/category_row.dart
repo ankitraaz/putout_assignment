@@ -69,7 +69,7 @@ class CategoryRow extends ConsumerWidget {
                         height: 64,
                         width: 64,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(24),
                           color: AppColors.primary.withValues(alpha: 0.1),
                         ),
 
@@ -117,18 +117,15 @@ class CategoryRow extends ConsumerWidget {
                       height: 64,
                       width: 64,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: bgColor.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(24),
+                        color: bgColor,
                       ),
                       child: Center(
-                        child: category.icon == 'checkroom'
-                            ? const Text('👕', style: TextStyle(fontSize: 28))
-                            : Icon(
-                                _getIconData(category.icon),
-                                color: bgColor,
-                                size: 28,
-                              ),
-
+                        child: Icon(
+                          _getIconData(category.icon),
+                          color: Colors.white,
+                          size: 28,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 8),

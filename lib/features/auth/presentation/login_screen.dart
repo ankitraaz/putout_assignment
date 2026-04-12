@@ -88,6 +88,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                     ),
                     child: Row(
                       children: [
+                        if (Navigator.canPop(context)) ...[
+                          GestureDetector(
+                            onTap: () => Navigator.pop(context),
+                            child: const Icon(Icons.arrow_back_ios_new, size: 20, color: AppColors.textPrimary),
+                          ),
+                          const SizedBox(width: 16),
+                        ],
                         Container(
                           width: 32,
                           height: 32,
@@ -104,7 +111,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Image.asset(
-                              'assets/images/k.png',
+                              'assets/images/k_logo.png',
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -159,7 +166,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(40),
                                 child: Image.asset(
-                                  'assets/images/k.png',
+                                  'assets/images/k_logo.png',
                                   width: 80,
                                   height: 80,
                                   fit: BoxFit.cover,
@@ -670,13 +677,11 @@ class _LoadingOverlay extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(30),
-                              child: Image.asset(
-                                'assets/images/k.png',
-                                width: 40,
-                                height: 40,
-                                fit: BoxFit.cover,
+                            child: const Center(
+                              child: Icon(
+                                Icons.restaurant,
+                                color: AppColors.kutootMaroon,
+                                size: 28,
                               ),
                             ),
                           ),

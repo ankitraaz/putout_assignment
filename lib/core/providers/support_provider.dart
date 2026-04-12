@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:kuttot/core/providers/auth_provider.dart';
 
 class SupportRequest {
   final String ticketId;
@@ -38,13 +39,17 @@ class SupportRequest {
 }
 
 class SupportNotifier extends StateNotifier<List<SupportRequest>> {
-  SupportNotifier() : super([]) {
+  final String phoneKey;
+
+  SupportNotifier(this.phoneKey) : super([]) {
     _loadRequests();
   }
 
+  String _key(String base) => phoneKey.isEmpty ? base : '${base}_$phoneKey';
+
   Future<void> _loadRequests() async {
     final prefs = await SharedPreferences.getInstance();
-    final data = prefs.getString('support_requests');
+    final data = prefs.getString(_key('support_requests'));
     if (data != null) {
       final List<dynamic> jsonList = json.decode(data);
       state = jsonList.map((e) => SupportRequest.fromJson(e)).toList();
@@ -54,8 +59,9 @@ class SupportNotifier extends StateNotifier<List<SupportRequest>> {
   Future<void> _saveRequests() async {
     final prefs = await SharedPreferences.getInstance();
     final data = json.encode(state.map((e) => e.toJson()).toList());
-    await prefs.setString('support_requests', data);
+    await prefs.setString(_key('support_requests'), data);
   }
+
 
   /// Submit a new support request. Returns the generated ticket ID.
   Future<String> submitRequest(String phone, String description) async {
@@ -76,7 +82,7 @@ class SupportNotifier extends StateNotifier<List<SupportRequest>> {
       state.where((r) => r.status == 'pending').toList();
 }
 
-final supportProvider =
-    StateNotifierProvider<SupportNotifier, List<SupportRequest>>((ref) {
-  return SupportNotifier();
+final supportProvider = StateNotifierProvider<SupportNotifier, List<SupportRequest>>((ref) {
+  final authState = ref.watch(authProvider);
+  return SupportNotifier(authState.phone ?? '');
 });

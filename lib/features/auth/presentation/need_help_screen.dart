@@ -96,7 +96,7 @@ class _NeedHelpScreenState extends ConsumerState<NeedHelpScreen> {
                   
                   // Center Logo
                   Image.asset(
-                    'assets/images/k.png',
+                    'assets/images/k_logo.png',
                     width: 32,
                     height: 32,
                   ),

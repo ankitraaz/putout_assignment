@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,13 +15,31 @@ import 'package:kuttot/features/profile/presentation/delete_account_screen.dart'
 import 'package:kuttot/features/profile/presentation/logout_confirmation_screen.dart';
 import 'package:kuttot/features/profile/presentation/edit_profile_screen.dart';
 import 'package:kuttot/features/support/presentation/support_screen.dart';
+import 'package:kuttot/features/support/presentation/support_history_screen.dart';
+import 'package:kuttot/features/subscriptions/presentation/subscription_screen.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userProfile = ref.watch(profileProvider);
+    final rawProfile = ref.watch(profileProvider);
+    final authState = ref.watch(authProvider);
+    final isGuest = authState.status != AuthStatus.authenticated;
+
+    final userProfile = isGuest 
+        ? UserProfile(
+            name: 'Guest Mode',
+            phone: '',
+            email: 'Login to view your full profile',
+            isVIP: false,
+            luxuryVillaStamps: 0,
+            goldBarStamps: 0,
+            profileImageUrl: null,
+            subscriptionExpiry: '-',
+          )
+        : rawProfile;
+
     final topPadding = MediaQuery.of(context).padding.top;
 
     return Scaffold(
@@ -350,39 +369,59 @@ class ProfileScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.2),
-                      width: 2,
+            GestureDetector(
+              onTap: () {
+                Clipboard.setData(const ClipboardData(text: 'WELCOME50'));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'Coupon code WELCOME50 copied to clipboard',
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                    backgroundColor: AppColors.kutootMaroon,
+                    duration: const Duration(seconds: 2),
+                    behavior: SnackBarBehavior.floating,
+                  ),
+                );
+              },
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.2),
+                        width: 2,
+                      ),
+                    ),
+                    child: Text(
+                      'WELCOME50',
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w900,
+                        color: AppColors.kutootRed,
+                        letterSpacing: 1.5,
+                      ),
                     ),
                   ),
-                  child: Text(
-                    'WELCOME50',
+                  const SizedBox(height: 6),
+                  Text(
+                    'TAP TO COPY',
                     style: GoogleFonts.plusJakartaSans(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w900,
-                      color: AppColors.kutootRed,
-                      letterSpacing: 1.5,
+                      fontSize: 7,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white.withValues(alpha: 0.6),
+                      letterSpacing: 1,
                     ),
                   ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  'TAP TO COPY',
-                  style: GoogleFonts.plusJakartaSans(
-                    fontSize: 7,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.white.withValues(alpha: 0.6),
-                    letterSpacing: 1,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
@@ -503,28 +542,36 @@ class ProfileScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 16),
-          Container(
-            width: double.infinity,
-            height: 48,
-            decoration: BoxDecoration(
-              color: AppColors.kutootRed,
-              borderRadius: BorderRadius.circular(999),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.kutootRed.withValues(alpha: 0.15),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Center(
-              child: Text(
-                'UPGRADE NOW',
-                style: GoogleFonts.plusJakartaSans(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
-                  letterSpacing: 1.5,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SubscriptionScreen()),
+              );
+            },
+            child: Container(
+              width: double.infinity,
+              height: 48,
+              decoration: BoxDecoration(
+                color: AppColors.kutootRed,
+                borderRadius: BorderRadius.circular(999),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.kutootRed.withValues(alpha: 0.15),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Center(
+                child: Text(
+                  'UPGRADE NOW',
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.white,
+                    letterSpacing: 1.5,
+                  ),
                 ),
               ),
             ),
@@ -837,6 +884,12 @@ class ProfileScreen extends ConsumerWidget {
                 title: 'Ticket History',
                 iconBg: AppColors.surfaceContainerHighest,
                 iconColor: AppColors.textPrimary,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SupportHistoryScreen()),
+                  );
+                },
               ),
             ],
           ),
@@ -850,6 +903,7 @@ class ProfileScreen extends ConsumerWidget {
     required String title,
     required Color iconBg,
     required Color iconColor,
+    VoidCallback? onTap,
   }) {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -871,7 +925,7 @@ class ProfileScreen extends ConsumerWidget {
         ),
       ),
       trailing: Icon(Icons.chevron_right, color: AppColors.textLight.withValues(alpha: 0.4), size: 20),
-      onTap: () {},
+      onTap: onTap ?? () {},
     );
   }
 

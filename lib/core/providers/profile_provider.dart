@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:kuttot/core/providers/auth_provider.dart';
 
 class UserProfile {
   final String name;
@@ -50,21 +51,26 @@ class UserProfile {
 }
 
 class ProfileNotifier extends StateNotifier<UserProfile> {
-  ProfileNotifier() : super(UserProfile()) {
-    _loadProfile();
+  final String phoneKey;
+
+  ProfileNotifier(this.phoneKey) : super(UserProfile()) {
+    loadProfile();
   }
-  Future<void> _loadProfile() async {
+  
+  String _key(String base) => phoneKey.isEmpty ? base : '${base}_$phoneKey';
+
+  Future<void> loadProfile() async {
     final prefs = await SharedPreferences.getInstance();
     state = UserProfile(
-      name: prefs.getString('user_name') ?? '',
-      phone: prefs.getString('user_phone') ?? '',
-      email: prefs.getString('user_email') ?? 'alex.johnson@example.com',
-      isVIP: prefs.getBool('user_is_vip') ?? true,
-      subscriptionExpiry: prefs.getString('user_sub_expiry') ?? 'OCT 2024',
-      luxuryVillaStamps: prefs.getInt('user_stamps_villa') ?? 8,
-      goldBarStamps: prefs.getInt('user_stamps_gold') ?? 4,
-      profileImageUrl: prefs.getString('user_image_url'),
-      notificationsEnabled: prefs.getBool('user_notifications_enabled') ?? true,
+      name: prefs.getString(_key('user_name')) ?? '',
+      phone: prefs.getString(_key('user_phone')) ?? '',
+      email: prefs.getString(_key('user_email')) ?? 'alex.johnson@example.com',
+      isVIP: prefs.getBool(_key('user_is_vip')) ?? true,
+      subscriptionExpiry: prefs.getString(_key('user_sub_expiry')) ?? 'OCT 2024',
+      luxuryVillaStamps: prefs.getInt(_key('user_stamps_villa')) ?? 8,
+      goldBarStamps: prefs.getInt(_key('user_stamps_gold')) ?? 4,
+      profileImageUrl: prefs.getString(_key('user_image_url')),
+      notificationsEnabled: prefs.getBool(_key('user_notifications_enabled')) ?? true,
     );
   }
 
@@ -82,10 +88,10 @@ class ProfileNotifier extends StateNotifier<UserProfile> {
     // Normalize email (Lowercase)
     final formattedEmail = email?.trim().toLowerCase();
 
-    await prefs.setString('user_name', formattedName);
-    await prefs.setString('user_phone', phone.trim());
-    if (formattedEmail != null) await prefs.setString('user_email', formattedEmail);
-    if (imageUrl != null) await prefs.setString('user_image_url', imageUrl);
+    await prefs.setString(_key('user_name'), formattedName);
+    await prefs.setString(_key('user_phone'), phone.trim());
+    if (formattedEmail != null) await prefs.setString(_key('user_email'), formattedEmail);
+    if (imageUrl != null) await prefs.setString(_key('user_image_url'), imageUrl);
     
     state = state.copyWith(
       name: formattedName,
@@ -97,14 +103,14 @@ class ProfileNotifier extends StateNotifier<UserProfile> {
 
   Future<void> updateStamps(int villa, int gold) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('user_stamps_villa', villa);
-    await prefs.setInt('user_stamps_gold', gold);
+    await prefs.setInt(_key('user_stamps_villa'), villa);
+    await prefs.setInt(_key('user_stamps_gold'), gold);
     state = state.copyWith(luxuryVillaStamps: villa, goldBarStamps: gold);
   }
 
   Future<void> toggleNotifications(bool enabled) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('user_notifications_enabled', enabled);
+    await prefs.setBool(_key('user_notifications_enabled'), enabled);
     state = state.copyWith(notificationsEnabled: enabled);
   }
 
@@ -125,5 +131,6 @@ class ProfileNotifier extends StateNotifier<UserProfile> {
 }
 
 final profileProvider = StateNotifierProvider<ProfileNotifier, UserProfile>((ref) {
-  return ProfileNotifier();
+  final authState = ref.watch(authProvider);
+  return ProfileNotifier(authState.phone ?? '');
 });

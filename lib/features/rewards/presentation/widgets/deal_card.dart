@@ -62,11 +62,11 @@ class DealCard extends StatelessWidget {
                           height: 48,
                           decoration: BoxDecoration(
                             color: AppColors.surfaceContainerLow,
-                            borderRadius: BorderRadius.circular(12),
+                            shape: BoxShape.circle,
                             border: Border.all(color: Colors.black.withValues(alpha: 0.05)),
                           ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
                             child: Image.network(
                               iconUrl,
                               fit: BoxFit.contain,

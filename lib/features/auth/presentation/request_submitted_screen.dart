@@ -31,7 +31,7 @@ class RequestSubmittedScreen extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
-                          'assets/images/k.png',
+                          'assets/images/k_logo.png',
                           fit: BoxFit.cover,
                         ),
                       ),

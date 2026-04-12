@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kuttot/core/constants/app_colors.dart';
 import 'package:kuttot/core/providers/auth_provider.dart';
+import 'package:kuttot/features/shell/presentation/shell_screen.dart';
 
 class LogoutConfirmationScreen extends ConsumerWidget {
   const LogoutConfirmationScreen({super.key});
@@ -154,10 +155,14 @@ class LogoutConfirmationScreen extends ConsumerWidget {
                           onTap: () async {
                             await ref.read(authProvider.notifier).logout();
                             if (context.mounted) {
+                              // Switch the shell's active tab to the Home tab
+                              ref.read(bottomNavIndexProvider.notifier).state = 0;
+                              // Pop the confirmation dialog back to the Shell
                               Navigator.popUntil(context, (route) => route.isFirst);
                             }
                           },
                           child: Container(
+
                             width: double.infinity,
                             height: 64,
                             decoration: BoxDecoration(

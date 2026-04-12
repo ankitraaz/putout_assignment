@@ -81,13 +81,16 @@ class AuthNotifier extends StateNotifier<AuthState> {
     final prefs = await SharedPreferences.getInstance();
     final isLoggedIn = prefs.getBool('is_logged_in') ?? false;
     if (isLoggedIn) {
-      final name = prefs.getString('user_name') ?? '';
-      final phone = prefs.getString('user_phone') ?? '';
-      final email = prefs.getString('user_email') ?? '';
-      final id = prefs.getString('user_id') ?? '';
-      final points = prefs.getInt('user_points') ?? 0;
+      final savedPhone = prefs.getString('user_phone') ?? '';
+      final name = prefs.getString('user_name_$savedPhone') ?? '';
+      final phone = prefs.getString('user_phone_$savedPhone') ?? savedPhone;
+      final email = prefs.getString('user_email_$savedPhone') ?? '';
+      final id = prefs.getString('user_id_$savedPhone') ?? '';
+      final points = prefs.getInt('user_points_$savedPhone') ?? 0;
+      
       state = state.copyWith(
         status: AuthStatus.authenticated,
+        phone: phone, // Added phone explicitly
         user: DummyUser(
           id: id,
           name: name,
@@ -144,32 +147,55 @@ class AuthNotifier extends StateNotifier<AuthState> {
     await Future.delayed(const Duration(milliseconds: 600));
 
     if (enteredOtp == state.otp) {
-      final users = await _loadUsers();
-      final existing = users.where((u) => u.phone == state.phone).toList();
-
+      final prefs = await SharedPreferences.getInstance();
+      final savedPhone = prefs.getString('user_phone');
+      
       DummyUser user;
-      if (existing.isNotEmpty) {
-        user = existing.first;
-      } else {
-        // Create a new user for unknown numbers
+      
+      // If logging in with the same phone number, retrieve their locally preserved, edited data!
+      final keySuffix = state.phone ?? '';
+      
+      if (savedPhone == state.phone && prefs.containsKey('user_name_$keySuffix')) {
         user = DummyUser(
-          id: 'USR${100 + Random().nextInt(900)}',
-          name: 'Kutoot User',
+          id: prefs.getString('user_id_$keySuffix') ?? 'USR999',
+          name: prefs.getString('user_name_$keySuffix') ?? 'Kutoot User',
           phone: state.phone ?? '',
           otp: enteredOtp,
-          email: '',
-          points: 0,
+          email: prefs.getString('user_email_$keySuffix') ?? '',
+          points: prefs.getInt('user_points_$keySuffix') ?? 0,
         );
+      } else {
+        // Different number or fresh install, fetch from dummy JSON or spawn new
+        final users = await _loadUsers();
+        final existing = users.where((u) => u.phone == state.phone).toList();
+
+        if (existing.isNotEmpty) {
+          user = existing.first;
+        } else {
+          // Create a new user for unknown numbers
+          user = DummyUser(
+            id: 'USR${100 + Random().nextInt(900)}',
+            name: 'Kutoot User',
+            phone: state.phone ?? '',
+            otp: enteredOtp,
+            email: '',
+            points: 0,
+          );
+        }
       }
 
-      // Save to local storage
-      final prefs = await SharedPreferences.getInstance();
+      // Save to local storage safely
       await prefs.setBool('is_logged_in', true);
-      await prefs.setString('user_name', user.name);
-      await prefs.setString('user_phone', user.phone);
-      await prefs.setString('user_email', user.email);
-      await prefs.setString('user_id', user.id);
-      await prefs.setInt('user_points', user.points);
+      // Ensure local phone session tracker logic is preserved globally to detect same-session returns
+      await prefs.setString('user_phone', state.phone ?? ''); 
+      
+      // Sandbox the specific data dynamically with suffix
+      final suffix = state.phone ?? '';
+      await prefs.setString('user_name_$suffix', user.name);
+      await prefs.setString('user_phone_$suffix', user.phone);
+      await prefs.setString('user_email_$suffix', user.email);
+      await prefs.setString('user_id_$suffix', user.id);
+      await prefs.setInt('user_points_$suffix', user.points);
 
       state = state.copyWith(
         status: AuthStatus.authenticated,
@@ -192,15 +218,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
-  /// Logout
+  /// Logout safely without destroying the local data cache for this user
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
+    
+    // Only kill the session. Persist the user data on disk.
     await prefs.setBool('is_logged_in', false);
-    await prefs.remove('user_name');
-    await prefs.remove('user_phone');
-    await prefs.remove('user_email');
-    await prefs.remove('user_id');
-    await prefs.remove('user_points');
+    
     state = const AuthState(status: AuthStatus.initial);
   }
 

@@ -61,9 +61,8 @@ class _AuthGate extends ConsumerWidget {
       );
     }
 
-    if (authState.status == AuthStatus.authenticated) {
-      return const ShellScreen();
-    }
-    return const LoginScreen();
+    // Default to ShellScreen (which handles both Guests and Authenticated users)
+    return const ShellScreen();
   }
 }
+

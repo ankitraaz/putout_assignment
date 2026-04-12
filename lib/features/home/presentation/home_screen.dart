@@ -3,11 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kuttot/core/constants/app_colors.dart';
 import 'package:kuttot/core/constants/app_strings.dart';
 import 'package:kuttot/core/providers/app_providers.dart';
+import 'package:kuttot/core/providers/auth_provider.dart';
 
 import 'package:kuttot/core/widgets/app_header.dart';
 import 'package:kuttot/core/widgets/custom_search_bar.dart';
 import 'package:kuttot/features/home/presentation/widgets/banner_card.dart';
 import 'package:kuttot/features/home/presentation/widgets/category_row.dart';
+import 'package:kuttot/features/home/presentation/widgets/guest_login_pill.dart';
 import 'package:kuttot/features/home/presentation/widgets/section_header.dart';
 import 'package:kuttot/features/home/presentation/widgets/store_card.dart';
 
@@ -18,6 +20,9 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authProvider);
+    final isGuest = authState.status != AuthStatus.authenticated;
+
     return Scaffold(
       backgroundColor: AppColors.scaffoldBg,
       body: SafeArea(
@@ -26,10 +31,16 @@ class HomeScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (isGuest)
+                const Padding(
+                  padding: EdgeInsets.only(left: 24, top: 4),
+                  child: GuestLoginPill(),
+                ),
+
               // ── Header ──
-              const Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: AppHeader(),
+              Padding(
+                padding: EdgeInsets.only(top: isGuest ? 8 : 16),
+                child: const AppHeader(),
               ),
 
               const SizedBox(height: 16), // mt-4 for search

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kuttot/core/constants/app_colors.dart';
 import 'package:kuttot/core/providers/location_provider.dart';
 import 'package:kuttot/features/home/presentation/widgets/location_search_sheet.dart';
+import 'package:kuttot/features/subscriptions/presentation/subscription_screen.dart';
 import 'package:kuttot/features/shell/presentation/shell_screen.dart';
 
 class AppHeader extends ConsumerWidget {
@@ -106,7 +107,10 @@ class AppHeader extends ConsumerWidget {
               ),
               child: ElevatedButton(
                 onPressed: () {
-                  ref.read(bottomNavIndexProvider.notifier).state = 3; 
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SubscriptionScreen()),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,

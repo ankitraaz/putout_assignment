@@ -68,7 +68,7 @@ class CuratedStoreCard extends ConsumerWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
                       decoration: BoxDecoration(
                         color: AppColors.locationOrange, // Orange flat 50% off
-                        borderRadius: BorderRadius.circular(6),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
                         'FLAT ${store.discount}% OFF',

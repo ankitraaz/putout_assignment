@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kuttot/core/constants/app_colors.dart';
 import 'package:kuttot/core/providers/auth_provider.dart';
+import 'package:kuttot/core/providers/profile_provider.dart';
 import 'package:kuttot/features/auth/presentation/need_help_screen.dart';
 
 class OtpScreen extends ConsumerStatefulWidget {
@@ -83,6 +84,9 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
     if (!_isOtpComplete) return;
     final success = await ref.read(authProvider.notifier).verifyOtp(_enteredOtp);
     if (mounted && success) {
+      // Force reload the profile so it picks up the correct phone and data from SharedPreferences natively
+      await ref.read(profileProvider.notifier).loadProfile();
+      
       // Pop all auth screens and go to shell
       Navigator.of(context).popUntil((route) => route.isFirst);
     } else if (mounted) {
