@@ -71,28 +71,6 @@ class PlansScreen extends ConsumerWidget {
           ),
         ],
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 90), // Offset for floating bottom nav
-        child: FloatingActionButton(
-          heroTag: null,
-          onPressed: () {
-            if (currentStore != null) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PaymentScreen(store: currentStore!),
-                ),
-              );
-            }
-          },
-          backgroundColor: const Color(0xFFAE1E3F),
-          shape: const CircleBorder(
-            side: BorderSide(color: Colors.white24, width: 2),
-          ),
-          elevation: 12,
-          child: const Icon(Icons.qr_code_scanner, color: Colors.white, size: 28),
-        ),
-      ),
     );
   }
 }
