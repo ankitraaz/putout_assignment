@@ -104,8 +104,9 @@ class CategoryRow extends ConsumerWidget {
               final colorHex = isFashion ? "#BE1E48" : category.color;
               final bgColor = _getColorFromHex(colorHex);
 
-              return Padding(
-                padding: const EdgeInsets.only(right: 24),
+              return RepaintBoundary(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 24),
                 child: GestureDetector(
                   onTap: () {
                     ref.read(selectedCategoryProvider.notifier).state = category.name;
@@ -142,7 +143,7 @@ class CategoryRow extends ConsumerWidget {
                   ],
                 ),
               ),
-            );
+            ));
           },
           ),
         );

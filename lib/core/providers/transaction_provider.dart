@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:isolate';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kuttot/data/models/transaction_model.dart';
@@ -22,10 +23,12 @@ class TransactionNotifier extends StateNotifier<List<TransactionModel>> {
     final prefs = await SharedPreferences.getInstance();
     final data = prefs.getStringList(_key('LOCAL_TRANSACTIONS'));
     if (data != null) {
-      state = data
-          .map((item) => TransactionModel.fromJson(json.decode(item)))
-          .toList()
-        ..sort((a, b) => b.timestamp.compareTo(a.timestamp)); // Newest first
+      state = await Isolate.run(() {
+        return data
+            .map((item) => TransactionModel.fromJson(json.decode(item)))
+            .toList()
+          ..sort((a, b) => b.timestamp.compareTo(a.timestamp)); // Newest first
+      });
     }
   }
 
